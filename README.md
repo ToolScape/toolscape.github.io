@@ -1,4 +1,6 @@
-# toolscape.github.io
+# ToolScape
+
+![Publish static files](https://github.com/ToolScape/toolscape.github.io/workflows/Publish%20static%20files/badge.svg)
 
 ## Project setup
 ```
