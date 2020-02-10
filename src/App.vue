@@ -1,30 +1,58 @@
 <template>
-  <div id="app">
-    <div id="nav">
-    </div>
-    <router-view/>
-  </div>
+    <v-app>
+        <v-navigation-drawer v-model="mainDrawer" app>
+            <v-list nav>
+                <v-list-item to="/">
+                    <v-list-item-content>
+                        <v-list-item-title class="title">
+                            Home
+                        </v-list-item-title>
+                        <v-list-item-subtitle>
+                            Home, sweet home
+                        </v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item to="/tbowmaxhit">
+                    <v-list-item-content>
+                        <v-list-item-title class="title">
+                            Tbow max hit
+                        </v-list-item-title>
+                        <v-list-item-subtitle>
+                            How high can you go?
+                        </v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-navigation-drawer>
+        <v-app-bar app>
+            <v-app-bar-nav-icon @click="mainDrawer = !mainDrawer"></v-app-bar-nav-icon>
+            <v-toolbar-title>ToolScape</v-toolbar-title>
+        </v-app-bar>
+        <v-content>
+            <v-container fluid>
+                <router-view/>
+            </v-container>
+        </v-content>
+        <v-footer>
+
+        </v-footer>
+    </v-app>
 </template>
 
+<script lang="ts">
+    import Vue from 'vue';
+
+    export default Vue.extend({
+        name: 'App',
+
+        components: {},
+
+        data: () => ({
+            "mainDrawer": false
+        }),
+    });
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+    html { overflow-y: auto }
 </style>
