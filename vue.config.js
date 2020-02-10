@@ -1,4 +1,5 @@
 module.exports = {
     lintOnSave: false,
-    indexPath: '../index.html'
+    publicPath: './dist',
+    indexPath: '../index.html',
 };
