@@ -3,9 +3,11 @@ import Boost from '../boost';
 class Strength extends Boost {
   priority = 10;
 
-  apply() {
-    const { strength } = this.player.skills;
-    this.player.setSkill('strength', Math.floor(strength * 0.1) + 3);
+  apply({ meleeDps }) {
+    if (meleeDps) {
+      const { effectiveStrengthLevel } = meleeDps;
+      meleeDps.effectiveStrengthLevel = Math.floor(effectiveStrengthLevel * 0.1) + 3;
+    }
   }
 }
 

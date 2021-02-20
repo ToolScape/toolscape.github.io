@@ -2,6 +2,8 @@ import { all } from 'core-js/fn/promise';
 import Boost from '../boost';
 
 class Void extends Boost {
+  priority = 6;
+
   type = 'all'; // melee, ranged, mage, all
 
   elite = false;
@@ -14,10 +16,10 @@ class Void extends Boost {
 
   apply({ meleeDps, rangedDps, mageDps }) {
     if (meleeDps) {
-      const { strength, attack } = meleeDps.skills;
+      const { effectiveStrengthLevel, effectiveAttackLevel } = meleeDps;
       if (this.type === 'all' || this.type === 'melee') {
-        this.meleeDps.setSkill('strength', strength * 1.1);
-        this.meleeDps.setSkill('attack', attack * 1.1);
+        meleeDps.effectiveStrengthLevel = Math.floor(effectiveStrengthLevel * 1.1);
+        meleeDps.effectiveAttackLevel = Math.floor(effectiveAttackLevel * 1.1);
       }
     }
     if (rangedDps) {

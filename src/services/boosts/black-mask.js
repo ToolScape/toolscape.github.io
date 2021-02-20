@@ -1,8 +1,16 @@
 import Boost from '../boost';
 
 class BlackMask extends Boost {
-  apply() {
-    this.player.setBonus('slayer', 7 / 6);
+  apply({ meleeDps, rangedDps, mageDps }) {
+    if (meleeDps) {
+      meleeDps.setBonus('slayer', 7 / 6);
+    }
+    if (rangedDps) {
+      throw new Error('Not Yet Implemented');
+    }
+    if (mageDps) {
+      throw new Error('Not Yet Implemented');
+    }
   }
 }
 

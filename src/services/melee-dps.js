@@ -11,7 +11,10 @@ class MeleeDps extends Dps {
 
   defenceRoll;
 
-  applyBoosts() {
+  calculate() {
+    this.effectiveStrengthLevel = this.skills.strength;
+    this.effectiveAttackLevel = this.skills.attack;
+
     this.boosts.forEach((boost) => {
       boost.apply({ meleeDps: this });
     });
