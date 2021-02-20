@@ -5,10 +5,15 @@ class Dps {
 
   boosts;
 
-  constructor({ skills, bonuses, boosts }) {
+  stance;
+
+  constructor({
+    skills, bonuses, boosts, stance,
+  }) {
     this.skills = skills;
     this.bonuses = bonuses;
     this.boosts = boosts;
+    this.stance = stance;
   }
 
   setSkill(name, level) {
