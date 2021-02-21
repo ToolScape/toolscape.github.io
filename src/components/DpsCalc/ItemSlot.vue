@@ -1,11 +1,11 @@
 <template>
   <div>
-    About page
+    An item slot
   </div>
 </template>
 
 <script>
 export default {
-  name: 'About',
+  name: 'ItemSlot',
 };
 </script>

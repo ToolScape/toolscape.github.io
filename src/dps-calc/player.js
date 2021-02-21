@@ -1,4 +1,5 @@
 import PassiveBoost from './boosts/passive-boost';
+import StanceBoost from './boosts/stance-boost';
 import MeleeDps from './melee-dps';
 
 class Player {
@@ -61,7 +62,7 @@ class Player {
     undead: 0,
   };
 
-  boosts = [new PassiveBoost()];
+  boosts = [new PassiveBoost(), new StanceBoost()];
 
   constructor({ skills, equipment, boosts }) {
     this.skills = { ...skills };

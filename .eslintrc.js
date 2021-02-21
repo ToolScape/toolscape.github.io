@@ -1,5 +1,4 @@
 module.exports = {
-  parser: '@babel/eslint-parser',
   env: {
     browser: true,
     es6: true,
@@ -7,6 +6,7 @@ module.exports = {
   },
   extends: [
     'plugin:vue/essential',
+    'plugin:vue/recommended',
     'airbnb-base',
   ],
   globals: {
@@ -16,6 +16,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
+    parser: '@babel/eslint-parser',
   },
   plugins: [
     'vue',

@@ -1,4 +1,3 @@
-import { all } from 'core-js/fn/promise';
 import Boost from '../boost';
 
 class Void extends Boost {

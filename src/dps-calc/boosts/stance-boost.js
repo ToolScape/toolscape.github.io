@@ -3,16 +3,9 @@ import Boost from '../boost';
 class StanceBoost extends Boost {
   priority = 8;
 
-  stance;
-
-  constructor(stance) {
-    super();
-    this.stance = stance;
-  }
-
   apply({ meleeDps, rangedDps, mageDps }) {
     if (meleeDps) {
-      switch (this.stance.attack_style) {
+      switch (meleeDps.stance.attack_style) {
         case 'aggressive':
           meleeDps.effectiveStrengthLevel += 3;
           break;
