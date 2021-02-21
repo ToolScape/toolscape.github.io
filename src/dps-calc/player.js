@@ -1,6 +1,6 @@
+import { camelCase } from 'lodash';
 import PassiveBoost from './boosts/passive-boost';
 import StanceBoost from './boosts/stance-boost';
-import MeleeDps from './melee-dps';
 
 class Player {
   skills = {
@@ -11,22 +11,6 @@ class Player {
     prayer: 1,
     magic: 1,
     hitpoints: 1,
-    runecraft: 1,
-    crafting: 1,
-    mining: 1,
-    smithing: 1,
-    fishing: 1,
-    cooking: 1,
-    firemaking: 1,
-    woodcutting: 1,
-    agility: 1,
-    herblore: 1,
-    thieving: 1,
-    fletching: 1,
-    slayer: 1,
-    farming: 1,
-    construction: 1,
-    hunter: 1,
   };
 
   equipment = {
@@ -58,26 +42,43 @@ class Player {
     rangedStrength: 0,
     magicDamage: 0,
     prayer: 0,
-    slayer: 0,
-    undead: 0,
+    slayer: 1,
+    undead: 1,
   };
 
   boosts = [new PassiveBoost(), new StanceBoost()];
 
-  constructor({ skills, equipment, boosts }) {
+  stance;
+
+  constructor({
+    skills, equipment, boosts, stance,
+  }) {
     this.skills = { ...skills };
     this.equipment = { ...equipment };
-    this.boosts = [...boosts];
+    this.boosts = [...this.boosts, ...boosts];
+    this.stance = stance || {
+      attack_style: 'accurate',
+      attack_type: 'crush',
+      boosts: '',
+      combat_style: 'punch',
+    };
+    this.calculateBonuses();
   }
 
   calculateBonuses() {
-    Object.keys(this.equipment).forEach((key) => {
-      console.log(this.equipment[key]);
-    });
-  }
-
-  calculateMeleeDps() {
-    this.dps.meleeDps = new MeleeDps(this);
+    const skipBonuses = ['requirements', 'slot'];
+    Object.values(this.equipment)
+      .filter(Boolean)
+      .forEach((item) => {
+        const equipBonuses = item.equipment;
+        Object.keys(equipBonuses)
+          .filter((bonus) => skipBonuses.indexOf(bonus) === -1)
+          .forEach((bonus) => {
+            const bonusValue = equipBonuses[bonus];
+            const camelCasedBonus = camelCase(bonus);
+            this.bonuses[camelCasedBonus] += bonusValue;
+          });
+      });
   }
 
   // accepts a single id or an array of ids
@@ -90,11 +91,18 @@ class Player {
     }
     const equipsArray = Object.values(this.equipment);
     for (let i = 0; i < ids.length; i++) {
-      if (!equipsArray.some(ids[i])) {
+      if (!equipsArray.some((equip) => ids.indexOf(equip.id) > -1)) {
         return false;
       }
     }
     return true;
+  }
+
+  get weapon() {
+    if (this.equipment.weapon) {
+      return this.equipment.weapon.weapon;
+    }
+    return undefined;
   }
 }
 

@@ -1,4 +1,6 @@
 class Dps {
+  tickSpeed = 0.6;
+
   skills;
 
   bonuses;
@@ -7,13 +9,19 @@ class Dps {
 
   stance;
 
+  weapon;
+
+  target;
+
   constructor({
-    skills, bonuses, boosts, stance,
-  }) {
-    this.skills = skills;
-    this.bonuses = bonuses;
-    this.boosts = boosts;
+    skills, bonuses, boosts, stance, weapon,
+  }, target) {
+    this.skills = { ...skills };
+    this.bonuses = { ...bonuses };
+    this.boosts = [...boosts];
     this.stance = stance;
+    this.weapon = weapon;
+    this.target = target;
   }
 
   setSkill(name, level) {
@@ -30,6 +38,18 @@ class Dps {
     } else {
       throw new Error(`Bonus '${name}' not found.`);
     }
+  }
+
+  get attackType() {
+    return this.stance.attack_type;
+  }
+
+  get attackSpeed() {
+    return this.weapon ? this.weapon.attack_speed : 4;
+  }
+
+  get attackSpeedInSeconds() {
+    return this.attackSpeed * this.tickSpeed;
   }
 }
 

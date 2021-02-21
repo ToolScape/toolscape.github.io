@@ -1,14 +1,17 @@
 import MeleeDps from './melee-dps';
 
 class DpsCalculator {
-  static calculate(player) {
-    const meleeDps = new MeleeDps({
-      skills: { ...player.skills },
-      bonuses: { ...player.bonuses },
-      boosts: player.boosts,
+  calculate(player) {
+    const meleeDps = new MeleeDps(player, {
+      defence_crush: 221,
+      defence_level: 100,
+      defence_magic: 0,
+      defence_ranged: 225,
+      defence_slash: 230,
+      defence_stab: 227,
     });
-    return player;
+    return meleeDps.calculate();
   }
 }
 
-export default DpsCalculator;
+export default new DpsCalculator();

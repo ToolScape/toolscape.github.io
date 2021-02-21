@@ -1,4 +1,5 @@
 const moduleDpsCalc = {
+  namespaced: true,
   state: () => ({}),
   mutations: {},
   actions: {},
