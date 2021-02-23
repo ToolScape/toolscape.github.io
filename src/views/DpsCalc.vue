@@ -1,42 +1,39 @@
 <template>
   <v-container fluid>
-    <item-select
-      :item-slots="['weapon', '2h']"
-      @input="setEquip({ slot: $event.equipment.slot, equip: $event })"
+    <player-equipment
+      @equipped="setEquipment"
     />
-    <item-select
-      :item-slots="['shield']"
+    <stance-selector
+      :equipped-weapon="weapon"
     />
-    <v-btn @click="calculate">
-      Calculate
-    </v-btn>
+    <osrs-flat-button>Rapid</osrs-flat-button>
   </v-container>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import ItemSelect from '../components/ItemSelect.vue';
-import DpsCalculator from '../dps-calc/dps-calculator';
+import PlayerEquipment from '../components/DpsCalc/PlayerEquipment.vue';
+import StanceSelector from '../components/DpsCalc/StanceSelector.vue';
+import OsrsFlatButton from '../components/OsrsFlatButton.vue';
 
 export default {
   name: 'DpsCalc',
-  components: { ItemSelect },
+  components: { OsrsFlatButton, PlayerEquipment, StanceSelector },
   data() {
     return {
-      selectedWeapon: undefined,
+      equipment: undefined,
     };
   },
   computed: {
-    ...mapGetters({
-      player: 'player/getPlayer',
-    }),
+    weapon() {
+      if (this.equipment && this.equipment.weapon) {
+        return this.equipment.weapon;
+      }
+      return undefined;
+    },
   },
   methods: {
-    ...mapActions({
-      setEquip: 'player/setEquip',
-    }),
-    calculate() {
-      console.log(DpsCalculator.calculate(this.player));
+    setEquipment(equipment) {
+      this.equipment = equipment;
     },
   },
 };

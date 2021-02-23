@@ -26,6 +26,7 @@ const modulePlayer = {
       ring: undefined,
     },
     boosts: [],
+    stance: undefined,
   }),
   mutations: {
     SET_SKILLS(state, skills) {
@@ -36,6 +37,9 @@ const modulePlayer = {
     },
     SET_BOOSTS(state, boosts) {
       state.boosts = boosts;
+    },
+    SET_STANCE(state, stance) {
+      state.stance = stance;
     },
   },
   actions: {
@@ -63,6 +67,9 @@ const modulePlayer = {
     addBoost({ commit }, boost) {
       // TODO: Logic to prevent duplicate boosts
       commit('SET_BOOSTS', [boost]);
+    },
+    setStance({ commit }, stance) {
+      commit('SET_STANCE', stance);
     },
   },
   getters: {

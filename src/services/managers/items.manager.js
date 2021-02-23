@@ -21,6 +21,10 @@ class ItemsManager {
     }
     return collection.toArray();
   }
+
+  getAll() {
+    return DataManager.db.items.toArray();
+  }
 }
 
 export default new ItemsManager();

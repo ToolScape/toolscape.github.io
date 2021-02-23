@@ -2,6 +2,9 @@
   <v-autocomplete
     item-text="name"
     return-object
+    clearable
+    auto-select-first
+    autofocus
     :items="items"
     :value="value"
     @input="$emit('input', $event)"
@@ -40,8 +43,13 @@ export default {
   data() {
     return {
       items: [],
-      search: undefined,
     };
+  },
+  watch: {
+    itemSlots: function itemSlots() {
+      this.items = [];
+      this.fetchItems();
+    },
   },
   mounted() {
     this.fetchItems();
