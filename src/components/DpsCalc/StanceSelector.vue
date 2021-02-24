@@ -1,28 +1,61 @@
 <template>
   <div class="stance-selector-container">
-    <span>{{ weapon.name }}</span>
+    <span class="osrs-text-quill-8 stance-selector-header">
+      {{ weapon.name }}
+    </span>
     <div
-      :class="{ 'staff': isStaff, 'other': !isStaff }"
       class="stance-selector-stances"
     >
-      <div
-        v-for="stance in stances"
-        :key="stance.combat_style"
-        class="stance-selector-stance osrs-text"
-        @click="stanceSelected(stance)"
+      <osrs-tooltip
+        v-for="(stance, index) in stances"
+        :key="index"
+        font-size="32px"
       >
-        {{ capitalize(stance.combat_style) }}
-      </div>
+        <template #activator="{ on }">
+          <osrs-flat-button
+            :active="selectedStance === stance"
+            class="stance-selector-stance osrs-text"
+            @click="stanceSelected(stance)"
+            v-on="on"
+          >
+            {{ capitalize(stance.combat_style) }}
+          </osrs-flat-button>
+        </template>
+        <span>
+          <span v-if="stance.attack_style">
+            ({{capitalize(stance.attack_style) }}) <br>
+          </span>
+          <span v-if="!stance.attack_style && stance.combat_style">
+            ({{ capitalize(stance.combat_style) }}) <br>
+          </span>
+          <span v-if="stance.attack_type">
+            ({{ capitalize(stance.attack_type) }}) <br>
+          </span>
+          <template v-if="stance.experience">
+            <span
+              v-for="experience in parseExperience(stance.experience)"
+              :key="experience"
+            >
+              ({{ capitalize(experience) }} XP) <br>
+            </span>
+          </template>
+        </span>
+      </osrs-tooltip>
     </div>
-    <span>Category: {{ category }}</span>
+    <span class="osrs-text-quill-8 stance-selector-footer">
+      Category: {{ category }}
+    </span>
   </div>
 </template>
 
 <script>
 import { capitalize } from 'lodash';
+import OsrsFlatButton from '../OsrsFlatButton.vue';
+import OsrsTooltip from '../OsrsTooltip.vue';
 
 export default {
   name: 'StanceSelector',
+  components: { OsrsTooltip, OsrsFlatButton },
   props: {
     equippedWeapon: {
       type: Object,
@@ -47,16 +80,19 @@ export default {
                 attack_style: 'accurate',
                 attack_type: 'crush',
                 combat_style: 'punch',
+                experience: 'attack',
               },
               {
                 attack_style: 'aggressive',
                 attack_type: 'crush',
                 combat_style: 'kick',
+                experience: 'strength',
               },
               {
                 attack_style: 'defensive',
                 attack_type: 'crush',
                 combat_style: 'block',
+                experience: 'defence',
               },
             ],
             weapon_type: 'unarmed',
@@ -66,21 +102,30 @@ export default {
       return weapon;
     },
     stances() {
-      return this.weapon.weapon.stances;
+      return this.weapon.weapon.stances.filter((i) => i.combat_style.indexOf('(defensive)') === -1);
     },
     category() {
       let category = this.weapon.weapon.weapon_type;
       category = category.replace('_', ' ');
       return capitalize(category);
     },
-    isStaff() {
-      return this.category.toLowerCase() === 'staff';
+  },
+  watch: {
+    weapon: {
+      immediate: true,
+      handler: function weaponChanged() {
+        [this.selectedStance] = this.stances;
+      },
     },
   },
   methods: {
     capitalize,
     stanceSelected(stance) {
-      console.log(stance);
+      this.selectedStance = stance;
+      this.$emit('stance-changed', stance);
+    },
+    parseExperience(experience) {
+      return experience.split(' and ');
     },
   },
 };
@@ -91,35 +136,27 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: darkgrey;
 }
 
 .stance-selector-stances {
-  width: 200px;
-  height: 100px;
-}
-
-.stance-selector-stances.other {
+  width: calc(128px * 2 + 10px);
+  margin: 20px 5px;
   display: grid;
-  grid-template-columns: 100px 100px;
-  grid-auto-rows: 40px;
+  grid-template-columns: 128px 128px;
+  grid-auto-rows: 64px;
+  gap: 4px;
   place-items: center;
 }
 
-.stance-selector-stances.staff {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: stretch;
-}
-
 .stance-selector-stance {
-  display: inline-block;
+  width: 128px;
 }
 
-.stance-selector-stances.staff .stance-selector-stance {
-  flex: 1;
-  height: 100px;
-  max-width: 100px;
+.stance-selector-header {
+  font-size: 16px;
+}
+
+.stance-selector-footer {
+  font-size: 16px;
 }
 </style>

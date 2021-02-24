@@ -82,14 +82,10 @@ import PlayerEquipSlot from './PlayerEquipSlot.vue';
 export default {
   name: 'PlayerEquipment',
   components: { PlayerEquipSlot, EquipSelectDialog },
-  data() {
-    return {
-      equipSelectDialog: {
-        show: false,
-        itemSlots: ['weapon', '2h'],
-        selectedItem: undefined,
-      },
-      equipment: {
+  props: {
+    equipment: {
+      type: Object,
+      default: () => ({
         head: undefined,
         cape: undefined,
         neck: undefined,
@@ -101,6 +97,15 @@ export default {
         hands: undefined,
         feet: undefined,
         ring: undefined,
+      }),
+    },
+  },
+  data() {
+    return {
+      equipSelectDialog: {
+        show: false,
+        itemSlots: ['weapon', '2h'],
+        selectedItem: undefined,
       },
     };
   },
@@ -111,27 +116,28 @@ export default {
       this.equipSelectDialog.show = true;
     },
     itemSelected(item) {
+      const localEquipment = this.equipment;
       if (item) {
         let { slot } = item.equipment;
         if (item.equipment.slot === '2h') {
           slot = 'weapon';
-          this.equipment.shield = undefined;
+          localEquipment.shield = undefined;
         }
         if (item.equipment.slot === 'shield' && this.equipment.weapon && this.equipment.weapon.equipment.slot === '2h') {
-          this.equipment.weapon = undefined;
+          localEquipment.weapon = undefined;
         }
-        this.equipment[slot] = item;
+        localEquipment[slot] = item;
       } else {
         let slot = this.equipSelectDialog.itemSlots[0];
         if (slot === '2h') {
           slot = 'weapon';
         }
-        this.equipment[slot] = undefined;
+        localEquipment[slot] = undefined;
       }
-      this.$emit('equipped', this.equipment);
+      this.$emit('update:equipment', localEquipment);
     },
     clear() {
-      this.equipment = {};
+      this.$emit('update:equipment', {});
     },
   },
 };

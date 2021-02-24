@@ -1,23 +1,20 @@
 <template>
   <v-container fluid>
-    <player-equipment
-      @equipped="setEquipment"
-    />
-    <stance-selector
-      :equipped-weapon="weapon"
-    />
-    <osrs-flat-button>Rapid</osrs-flat-button>
+    <div class="some-class">
+      <player-details />
+      <player-details />
+    </div>
   </v-container>
 </template>
 
 <script>
-import PlayerEquipment from '../components/DpsCalc/PlayerEquipment.vue';
-import StanceSelector from '../components/DpsCalc/StanceSelector.vue';
-import OsrsFlatButton from '../components/OsrsFlatButton.vue';
+import PlayerDetails from '../components/DpsCalc/PlayerDetails.vue';
 
 export default {
   name: 'DpsCalc',
-  components: { OsrsFlatButton, PlayerEquipment, StanceSelector },
+  components: {
+    PlayerDetails,
+  },
   data() {
     return {
       equipment: undefined,
@@ -38,3 +35,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.some-class {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+</style>
