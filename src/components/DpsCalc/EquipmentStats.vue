@@ -55,7 +55,10 @@
     <ul class="equipment-stats-list">
       <osrs-tooltip>
         <template #activator="{ on }">
-          <li class="equipment-stats-list-item" v-on="on">
+          <li
+            class="equipment-stats-list-item"
+            v-on="on"
+          >
             Undead: {{ parseBonus(bonuses.undead, { targetSpecific: true }) }}
           </li>
         </template>
@@ -66,7 +69,10 @@
       </osrs-tooltip>
       <osrs-tooltip>
         <template #activator="{ on }">
-          <li class="equipment-stats-list-item" v-on="on">
+          <li
+            class="equipment-stats-list-item"
+            v-on="on"
+          >
             Slayer: {{ parseBonus(bonuses.slayer, { targetSpecific: true }) }}
           </li>
         </template>

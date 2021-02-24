@@ -23,7 +23,7 @@
         </template>
         <span>
           <span v-if="stance.attack_style">
-            ({{capitalize(stance.attack_style) }}) <br>
+            ({{ capitalize(stance.attack_style) }}) <br>
           </span>
           <span v-if="!stance.attack_style && stance.combat_style">
             ({{ capitalize(stance.combat_style) }}) <br>

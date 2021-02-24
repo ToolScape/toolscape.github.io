@@ -19,13 +19,9 @@ export default {
   },
   methods: {
     async checkForUpdates() {
-      const t0 = performance.now();
       await DataManager.checkForUpdates().then((updates) => {
-        console.log('Update required for ', updates);
         DataManager.update(updates);
       });
-      const t1 = performance.now();
-      console.log(`Updating took ${t1 - t0} milliseconds`);
     },
   },
 };

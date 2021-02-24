@@ -1,7 +1,7 @@
 <template>
   <osrs-container class="player-details-container">
     <osrs-tabs
-        v-model="selectedTab"
+      v-model="selectedTab"
     >
       <osrs-tab>
         <v-img src="../../assets/osrs/Combat icon.png" />
