@@ -29,7 +29,7 @@
       <osrs-tab-item>
         <stance-selector
           :equipped-weapon="weapon"
-          @stance-changed="stanceChanged"
+          @stance-changed="setStance"
         />
       </osrs-tab-item>
       <osrs-tab-item>
@@ -41,7 +41,7 @@
             :equipment.sync="equipment"
           />
           <equipment-stats
-            :bonuses="bonuses"
+            :equipment="equipment"
           />
         </div>
       </osrs-tab-item>
@@ -67,7 +67,6 @@ import OsrsTabItems from '../OsrsTabs/OsrsTabItems.vue';
 import OsrsTabItem from '../OsrsTabs/OsrsTabItem.vue';
 import PlayerEquipment from './PlayerEquipment.vue';
 import EquipmentStats from './EquipmentStats.vue';
-import Player from '../../dps-calc/player';
 
 export default {
   name: 'PlayerDetails',
@@ -84,33 +83,34 @@ export default {
   data() {
     return {
       selectedTab: 0,
-      equipment: undefined,
-      skills: undefined,
-      boosts: undefined,
-      stance: undefined,
+      equipment: {},
+      skills: {},
+      stance: {},
+      boosts: {},
     };
   },
   computed: {
-    player() {
-      return new Player({
-        skills: this.skills || {},
-        equipment: this.equipment || {},
-        boosts: this.boosts || [],
-        stance: this.stance,
-      });
-    },
     weapon() {
       return this.equipment && this.equipment.weapon ? this.equipment.weapon : undefined;
     },
-    bonuses() {
-      return this.player ? this.player.bonuses : undefined;
+  },
+  watch: {
+    equipment: function equipmentChanged(equipment) {
+      this.$emit('equipment-changed', equipment);
+    },
+    skills: function skillsChanged(skills) {
+      this.$emit('skills-changed', skills);
+    },
+    stance: function stanceChanged(stance) {
+      this.$emit('stance-changed', stance);
+    },
+    boosts: function boostsChanged(boosts) {
+      this.$emit('boosts-changed', boosts);
     },
   },
   methods: {
-    stanceChanged(stance) {
+    setStance(stance) {
       this.stance = stance;
-    },
-    itemEquipped() {
     },
   },
 };
@@ -119,10 +119,12 @@ export default {
 <style scoped>
 .player-details-container {
   position: relative;
+  min-width: 350px;
   max-width: 400px;
   min-height: 400px;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .player-details-tab-items {

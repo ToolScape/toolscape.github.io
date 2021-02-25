@@ -1,6 +1,3 @@
-
-add clear button to equipment screen
-
 skills overview
 
 prayer selection
@@ -10,3 +7,5 @@ boost selection
 improve selection screens
 
 extra settings (slayer task, etc)
+
+remove camel case for api retrieved values

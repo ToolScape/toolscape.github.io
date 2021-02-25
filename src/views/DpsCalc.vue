@@ -1,23 +1,38 @@
 <template>
   <v-container fluid>
     <div class="some-class">
-      <player-details />
-      <player-details />
+      <player-details
+        @equipment-changed="setEquipment"
+        @skills-changed="setSkills"
+        @stance-changed="setStance"
+        @boosts-changed="setBoosts"
+      />
+      <target-details
+        @target-changed="setTarget"
+      />
     </div>
   </v-container>
 </template>
 
 <script>
 import PlayerDetails from '../components/DpsCalc/PlayerDetails.vue';
+import TargetDetails from '../components/DpsCalc/TargetDetails.vue';
 
 export default {
   name: 'DpsCalc',
   components: {
+    TargetDetails,
     PlayerDetails,
   },
   data() {
     return {
-      equipment: undefined,
+      player: {
+        equipment: undefined,
+        skills: undefined,
+        stance: undefined,
+        boosts: undefined,
+      },
+      target: undefined,
     };
   },
   computed: {
@@ -30,7 +45,19 @@ export default {
   },
   methods: {
     setEquipment(equipment) {
-      this.equipment = equipment;
+      this.player.equipment = equipment;
+    },
+    setSkills(skills) {
+      this.player.skills = skills;
+    },
+    setStance(stance) {
+      this.player.stance = stance;
+    },
+    setBoosts(boosts) {
+      this.player.boosts = boosts;
+    },
+    setTarget(target) {
+      this.target = target;
     },
   },
 };
@@ -40,6 +67,7 @@ export default {
 .some-class {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
 }
 </style>

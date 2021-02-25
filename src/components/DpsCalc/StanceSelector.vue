@@ -114,7 +114,7 @@ export default {
     weapon: {
       immediate: true,
       handler: function weaponChanged() {
-        [this.selectedStance] = this.stances;
+        this.stanceSelected(this.stances[0]);
       },
     },
   },
