@@ -1,7 +1,7 @@
 <template>
   <div class="osrs-number-input-container">
     <div class="osrs-number-input-prepend">
-      <slot name="prepend"></slot>
+      <slot name="prepend" />
     </div>
     <input
       :value="value"
@@ -11,9 +11,9 @@
       :max="max"
       @input="$emit('input', $event.target.value)"
       @keyup="detectEnter"
-    />
+    >
     <div class="osrs-number-input-append">
-      <slot name="append"></slot>
+      <slot name="append" />
     </div>
   </div>
 </template>
