@@ -1,6 +1,9 @@
 <template>
   <osrs-container>
-    <div v-if="dpsResult" @click="clicked">
+    <div
+      v-if="dpsResult"
+      @click="clicked"
+    >
       <span>Max hit: {{ dpsResult.maxHit }}</span> <br>
       <span>Hit chance: {{ (dpsResult.hitChance * 100).toFixed(2) }}%</span> <br>
       <span>DPS: {{ dpsResult.dps.toFixed(4) }}</span> <br>

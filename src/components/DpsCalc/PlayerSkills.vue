@@ -5,7 +5,7 @@
       @enter-pressed="fetchPlayer(playerName)"
     >
       <template #prepend>
-        <v-img src="../../assets/osrs/HiScores icon.png"></v-img>
+        <v-img src="../../assets/osrs/HiScores icon.png" />
       </template>
       <template #append>
         <osrs-flat-button @click="fetchPlayer(playerName)">

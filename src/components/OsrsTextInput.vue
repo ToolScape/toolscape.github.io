@@ -1,7 +1,7 @@
 <template>
   <div class="osrs-text-input-container">
     <div class="osrs-text-input-prepend">
-      <slot name="prepend"></slot>
+      <slot name="prepend" />
     </div>
     <input
       :value="value"
@@ -9,9 +9,9 @@
       type="text"
       @input="$emit('input', $event.target.value)"
       @keyup="detectEnter"
-    />
+    >
     <div class="osrs-text-input-append">
-      <slot name="append"></slot>
+      <slot name="append" />
     </div>
   </div>
 </template>

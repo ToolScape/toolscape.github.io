@@ -127,7 +127,7 @@
                 max="99"
                 @keyup="keyUp($event)"
                 @blur="stopEditing"
-              />
+              >
             </foreignObject>
           </g>
         </svg>
