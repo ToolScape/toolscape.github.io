@@ -10,6 +10,10 @@
       <target-details
         @target-changed="setTarget"
       />
+
+      <calculation-result
+        :dps-result="dpsResult"
+      />
     </div>
   </v-container>
 </template>
@@ -17,10 +21,14 @@
 <script>
 import PlayerDetails from '../components/DpsCalc/PlayerDetails.vue';
 import TargetDetails from '../components/DpsCalc/TargetDetails.vue';
+import CalculationResult from '../components/DpsCalc/CalculationResult.vue';
+import DpsCalculator from '../dps-calc/dps-calculator';
+import Player from '../dps-calc/player';
 
 export default {
   name: 'DpsCalc',
   components: {
+    CalculationResult,
     TargetDetails,
     PlayerDetails,
   },
@@ -39,6 +47,21 @@ export default {
     weapon() {
       if (this.equipment && this.equipment.weapon) {
         return this.equipment.weapon;
+      }
+      return undefined;
+    },
+    dpsResult() {
+      if (this.player && this.target) {
+        console.log('Calculating!');
+        return DpsCalculator.calculate(
+          new Player({
+            skills: this.player.skills,
+            equipment: this.player.equipment,
+            stance: this.player.stance,
+            boosts: this.player.boosts,
+          }),
+          this.target,
+        );
       }
       return undefined;
     },

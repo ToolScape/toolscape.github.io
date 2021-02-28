@@ -1,11 +1,12 @@
-skills overview
-
-prayer selection
-
-boost selection
+player settings:
+bgs, dwh, on task, dharok, darklight (weaken), vulnerability
 
 improve selection screens
 
-extra settings (slayer task, etc)
+refactor reuse of osrs tile (skill tile, total level tile, flat button)
 
-remove camel case for api retrieved values
+clean up data to remove duplicate or cosmetic variations
+
+add ranged dps
+
+add magic dps

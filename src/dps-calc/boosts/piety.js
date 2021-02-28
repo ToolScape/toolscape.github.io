@@ -10,6 +10,14 @@ class Piety extends Boost {
       meleeDps.effectiveAttackLevel = Math.floor(effectiveAttackLevel * 1.2);
     }
   }
+
+  get name() {
+    return 'Piety';
+  }
+
+  get description() {
+    return '+20% Attack, +23% Strength, +25% Defence';
+  }
 }
 
 export default Piety;

@@ -5,14 +5,16 @@
     :style="cssVars"
     @mouseover="onMouseOver"
     @mouseleave="onMouseLeave"
+    @click="$emit('click')"
   >
     <slot
       name="activator"
+      v-bind="$attrs"
       v-on="$listeners"
     />
     <div
       class="osrs-tooltip osrs-text-plain-11"
-      :class="{'active': hover}"
+      :class="{'show-osrs-tooltip': hover}"
     >
       <slot />
     </div>
@@ -25,7 +27,7 @@ export default {
   props: {
     fontSize: {
       type: String,
-      default: '16px',
+      default: '18px',
     },
   },
   data() {
@@ -53,12 +55,12 @@ export default {
 
 <style scoped>
 .osrs-tooltip-container {
-  --osrs-tooltip-font-size: 16px;
+  --osrs-tooltip-font-size: 18px;
 }
 
 .osrs-tooltip-container {
   position: relative;
-  display: block;
+  display: flex;
 }
 
 .osrs-tooltip {
@@ -66,7 +68,6 @@ export default {
   position: absolute;
   top: 110%;
   left: 5px;
-  white-space: nowrap;
   background: #ffffa0;
   border: 1px solid black;
   padding: 0 2px;
@@ -77,9 +78,10 @@ export default {
   z-index: 10;
   user-select: none;
   pointer-events: none;
+  white-space: nowrap;
 }
 
-.osrs-tooltip.active {
+.osrs-tooltip.show-osrs-tooltip {
   visibility: visible;
 }
 </style>

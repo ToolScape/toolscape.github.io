@@ -24,6 +24,7 @@ export default {
   display: none;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }
 
 .osrs-tab-item-container.osrs-active-tab-item {

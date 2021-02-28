@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-main>
+  <v-app class="toolscape-application-wrapper">
+    <v-main class="">
       <router-view />
     </v-main>
   </v-app>
@@ -51,4 +51,7 @@ export default {
 </style>
 
 <style scoped>
+.toolscape-application-wrapper {
+  background: #0c0c0c !important;
+}
 </style>

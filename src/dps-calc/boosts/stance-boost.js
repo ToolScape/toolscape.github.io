@@ -3,7 +3,7 @@ import Boost from '../boost';
 class StanceBoost extends Boost {
   priority = 8;
 
-  apply({ meleeDps, rangedDps, mageDps }) {
+  apply({ meleeDps, rangedDps, magicDps }) {
     if (meleeDps) {
       switch (meleeDps.stance.attack_style) {
         case 'aggressive':
@@ -21,9 +21,13 @@ class StanceBoost extends Boost {
     if (rangedDps) {
       throw new Error('NYE');
     }
-    if (mageDps) {
+    if (magicDps) {
       throw new Error('NYE');
     }
+  }
+
+  get name() {
+    return 'Stance boost';
   }
 }
 

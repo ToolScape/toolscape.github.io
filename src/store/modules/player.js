@@ -1,5 +1,3 @@
-import Player from '../../dps-calc/player';
-
 const modulePlayer = {
   namespaced: true,
   state: () => ({
@@ -73,9 +71,6 @@ const modulePlayer = {
     },
   },
   getters: {
-    getPlayer(state) {
-      return new Player(state);
-    },
   },
 };
 

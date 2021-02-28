@@ -1,6 +1,10 @@
 html {
-    --osrs-dark-brown: #28251e;
-    --osrs-brown: #3e3529;
-    --osrs-pale-brown: #5d5848;
-    --osrs-light-brown: #575040;
+    --osrs-darker-brown: #28251e;
+    --osrs-dark-brown: #372e22;
+    --osrs-brown: #483e33;
+    --osrs-pale-brown: #726451;
+    --osrs-light-brown: #554c41;
+    --osrs-orange: #ff981f;
+    --osrs-yellow: #ffff00;
+    --osrs-green: #00fe00;
 }

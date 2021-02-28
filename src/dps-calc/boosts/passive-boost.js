@@ -1,9 +1,9 @@
 import Boost from '../boost';
 
 class PassiveBoost extends Boost {
-  priority = 7;
+  priority = 8;
 
-  apply({ meleeDps, rangedDps, mageDps }) {
+  apply({ meleeDps, rangedDps, magicDps }) {
     if (meleeDps) {
       meleeDps.effectiveStrengthLevel += 8;
       meleeDps.effectiveAttackLevel += 8;
@@ -11,9 +11,13 @@ class PassiveBoost extends Boost {
     if (rangedDps) {
       throw new Error('NYE');
     }
-    if (mageDps) {
+    if (magicDps) {
       throw new Error('NYE');
     }
+  }
+
+  get name() {
+    return 'Passive boost';
   }
 }
 

@@ -19,7 +19,7 @@
         <v-img src="../../assets/osrs/Vial.png" />
       </osrs-tab>
       <osrs-tab>
-        <v-img src="../../assets/osrs/Account Management.png" />
+        <v-img src="../../assets/osrs/Cog.png" />
       </osrs-tab>
     </osrs-tabs>
     <osrs-tab-items
@@ -33,7 +33,9 @@
         />
       </osrs-tab-item>
       <osrs-tab-item>
-        TODO: Skills
+        <player-skills
+          @skills-changed="setSkills"
+        />
       </osrs-tab-item>
       <osrs-tab-item>
         <div class="player-details-equipment-tab">
@@ -46,19 +48,24 @@
         </div>
       </osrs-tab-item>
       <osrs-tab-item>
-        TODO: Prayer
+        <player-prayer
+          @active-prayers="prayersChanged"
+        />
       </osrs-tab-item>
       <osrs-tab-item>
-        TODO: Boosts
+        <player-potions
+          @potions-changed="potionsChanged"
+        />
       </osrs-tab-item>
       <osrs-tab-item>
-        TODO: Extra settings
+        <player-settings />
       </osrs-tab-item>
     </osrs-tab-items>
   </osrs-container>
 </template>
 
 <script>
+import BoostManager from '../../dps-calc/boost.manager';
 import OsrsContainer from '../OsrsContainer.vue';
 import OsrsTabs from '../OsrsTabs/OsrsTabs.vue';
 import OsrsTab from '../OsrsTabs/OsrsTab.vue';
@@ -67,10 +74,18 @@ import OsrsTabItems from '../OsrsTabs/OsrsTabItems.vue';
 import OsrsTabItem from '../OsrsTabs/OsrsTabItem.vue';
 import PlayerEquipment from './PlayerEquipment.vue';
 import EquipmentStats from './EquipmentStats.vue';
+import PlayerSkills from './PlayerSkills.vue';
+import PlayerPrayer from './PlayerPrayer.vue';
+import PlayerPotions from './PlayerPotions.vue';
+import PlayerSettings from './PlayerSettings.vue';
 
 export default {
   name: 'PlayerDetails',
   components: {
+    PlayerSettings,
+    PlayerPotions,
+    PlayerPrayer,
+    PlayerSkills,
     EquipmentStats,
     PlayerEquipment,
     OsrsTabItems,
@@ -82,11 +97,13 @@ export default {
   },
   data() {
     return {
-      selectedTab: 0,
+      selectedTab: 2,
       equipment: {},
       skills: {},
       stance: {},
-      boosts: {},
+      boosts: [],
+      activePrayers: [],
+      potions: [],
     };
   },
   computed: {
@@ -95,22 +112,53 @@ export default {
     },
   },
   watch: {
-    equipment: function equipmentChanged(equipment) {
-      this.$emit('equipment-changed', equipment);
+    equipment: {
+      immediate: true,
+      handler: function equipmentChanged(equipment) {
+        this.$emit('equipment-changed', equipment);
+        this.updateBoosts();
+      },
     },
-    skills: function skillsChanged(skills) {
-      this.$emit('skills-changed', skills);
+    skills: {
+      immediate: true,
+      handler: function skillsChanged(skills) {
+        this.$emit('skills-changed', skills);
+      },
     },
-    stance: function stanceChanged(stance) {
-      this.$emit('stance-changed', stance);
+    stance: {
+      immediate: true,
+      handler: function stanceChanged(stance) {
+        this.$emit('stance-changed', stance);
+      },
     },
-    boosts: function boostsChanged(boosts) {
-      this.$emit('boosts-changed', boosts);
+    boosts: {
+      immediate: true,
+      handler: function boostsChanged(boosts) {
+        this.$emit('boosts-changed', boosts);
+      },
     },
   },
   methods: {
     setStance(stance) {
       this.stance = stance;
+    },
+    setSkills(skills) {
+      this.skills = skills;
+    },
+    updateBoosts() {
+      this.boosts = [
+        ...BoostManager.getPrayerBoosts(this.activePrayers),
+        ...BoostManager.getEquipmentBoosts(this.equipment),
+        ...BoostManager.getPotionBoosts(this.potions),
+      ];
+    },
+    prayersChanged(activePrayers) {
+      this.activePrayers = activePrayers;
+      this.updateBoosts();
+    },
+    potionsChanged(potions) {
+      this.potions = potions;
+      this.updateBoosts();
     },
   },
 };
@@ -119,9 +167,9 @@ export default {
 <style scoped>
 .player-details-container {
   position: relative;
-  min-width: 350px;
+  min-width: 360px;
   max-width: 400px;
-  min-height: 400px;
+  min-height: 520px;
   display: flex;
   flex-direction: column;
   align-items: center;
