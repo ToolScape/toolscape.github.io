@@ -10,9 +10,10 @@ class MeleeDps extends Dps {
     this.effectiveStrengthLevel = this.skills.strength;
     this.effectiveAttackLevel = this.skills.attack;
 
-    this.boosts.forEach((boost) => {
-      boost.apply({ meleeDps: this });
-    });
+    this.boosts.sort((a, b) => b.priority - a.priority)
+      .forEach((boost) => {
+        boost.apply({ meleeDps: this });
+      });
 
     return this;
   }

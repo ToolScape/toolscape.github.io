@@ -1,87 +1,96 @@
 <template>
   <div class="player-equipment-container">
-    <player-equip-slot
-      class="player-equip-head"
-      equip-slot="head"
-      :equipped-item="equipment.head"
-      @slot-click="selectItem(['head'], equipment.head)"
-    />
-    <player-equip-slot
-      class="player-equip-cape"
-      equip-slot="cape"
-      :equipped-item="equipment.cape"
-      @slot-click="selectItem(['cape'], equipment.cape)"
-    />
-    <player-equip-slot
-      class="player-equip-neck"
-      equip-slot="neck"
-      :equipped-item="equipment.neck"
-      @slot-click="selectItem(['neck'], equipment.neck)"
-    />
-    <player-equip-slot
-      class="player-equip-ammo"
-      equip-slot="ammo"
-      :equipped-item="equipment.ammo"
-      @slot-click="selectItem(['ammo'], equipment.ammo)"
-    />
-    <player-equip-slot
-      class="player-equip-weapon"
-      equip-slot="weapon"
-      :equipped-item="equipment.weapon"
-      @slot-click="selectItem(['weapon', '2h'], equipment.weapon)"
-    />
-    <player-equip-slot
-      class="player-equip-body"
-      equip-slot="body"
-      :equipped-item="equipment.body"
-      @slot-click="selectItem(['body'], equipment.body)"
-    />
-    <player-equip-slot
-      class="player-equip-shield"
-      equip-slot="shield"
-      :equipped-item="equipment.shield"
-      @slot-click="selectItem(['shield'], equipment.shield)"
-    />
-    <player-equip-slot
-      class="player-equip-legs"
-      equip-slot="legs"
-      :equipped-item="equipment.legs"
-      @slot-click="selectItem(['legs'], equipment.legs)"
-    />
-    <player-equip-slot
-      class="player-equip-hands"
-      equip-slot="hands"
-      :equipped-item="equipment.hands"
-      @slot-click="selectItem(['hands'], equipment.hands)"
-    />
-    <player-equip-slot
-      class="player-equip-feet"
-      equip-slot="feet"
-      :equipped-item="equipment.feet"
-      @slot-click="selectItem(['feet'], equipment.feet)"
-    />
-    <player-equip-slot
-      class="player-equip-ring"
-      equip-slot="ring"
-      :equipped-item="equipment.ring"
-      @slot-click="selectItem(['ring'], equipment.ring)"
-    />
-    <equip-select-dialog
-      :dialog.sync="equipSelectDialog.show"
-      :item-slots="equipSelectDialog.itemSlots"
-      :selected-item="equipSelectDialog.selectedItem"
-      @item-selected="itemSelected"
-    />
+    <div class="player-equipment-grid">
+      <player-equip-slot
+        class="player-equip-head"
+        equip-slot="head"
+        :equipped-item="equipment.head"
+        @slot-click="selectItem(['head'], equipment.head)"
+      />
+      <player-equip-slot
+        class="player-equip-cape"
+        equip-slot="cape"
+        :equipped-item="equipment.cape"
+        @slot-click="selectItem(['cape'], equipment.cape)"
+      />
+      <player-equip-slot
+        class="player-equip-neck"
+        equip-slot="neck"
+        :equipped-item="equipment.neck"
+        @slot-click="selectItem(['neck'], equipment.neck)"
+      />
+      <player-equip-slot
+        class="player-equip-ammo"
+        equip-slot="ammo"
+        :equipped-item="equipment.ammo"
+        @slot-click="selectItem(['ammo'], equipment.ammo)"
+      />
+      <player-equip-slot
+        class="player-equip-weapon"
+        equip-slot="weapon"
+        :equipped-item="equipment.weapon"
+        @slot-click="selectItem(['weapon', '2h'], equipment.weapon)"
+      />
+      <player-equip-slot
+        class="player-equip-body"
+        equip-slot="body"
+        :equipped-item="equipment.body"
+        @slot-click="selectItem(['body'], equipment.body)"
+      />
+      <player-equip-slot
+        class="player-equip-shield"
+        equip-slot="shield"
+        :equipped-item="equipment.shield"
+        @slot-click="selectItem(['shield'], equipment.shield)"
+      />
+      <player-equip-slot
+        class="player-equip-legs"
+        equip-slot="legs"
+        :equipped-item="equipment.legs"
+        @slot-click="selectItem(['legs'], equipment.legs)"
+      />
+      <player-equip-slot
+        class="player-equip-hands"
+        equip-slot="hands"
+        :equipped-item="equipment.hands"
+        @slot-click="selectItem(['hands'], equipment.hands)"
+      />
+      <player-equip-slot
+        class="player-equip-feet"
+        equip-slot="feet"
+        :equipped-item="equipment.feet"
+        @slot-click="selectItem(['feet'], equipment.feet)"
+      />
+      <player-equip-slot
+        class="player-equip-ring"
+        equip-slot="ring"
+        :equipped-item="equipment.ring"
+        @slot-click="selectItem(['ring'], equipment.ring)"
+      />
+      <equip-select-dialog
+        :dialog.sync="equipSelectDialog.show"
+        :item-slots="equipSelectDialog.itemSlots"
+        :selected-item="equipSelectDialog.selectedItem"
+        @item-selected="itemSelected"
+      />
+    </div>
+    <osrs-flat-button
+      class="player-equipment-clear-button"
+      @click="clear"
+    >
+      Reset
+    </osrs-flat-button>
   </div>
 </template>
 
 <script>
 import EquipSelectDialog from '../dialogs/EquipSelectDialog.vue';
 import PlayerEquipSlot from './PlayerEquipSlot.vue';
+import OsrsFlatButton from '../OsrsFlatButton.vue';
 
 export default {
   name: 'PlayerEquipment',
-  components: { PlayerEquipSlot, EquipSelectDialog },
+  components: { OsrsFlatButton, PlayerEquipSlot, EquipSelectDialog },
   props: {
     equipment: {
       type: Object,
@@ -116,7 +125,7 @@ export default {
       this.equipSelectDialog.show = true;
     },
     itemSelected(item) {
-      const localEquipment = this.equipment;
+      const localEquipment = { ...this.equipment };
       if (item) {
         let { slot } = item.equipment;
         if (item.equipment.slot === '2h') {
@@ -137,7 +146,19 @@ export default {
       this.$emit('update:equipment', localEquipment);
     },
     clear() {
-      this.$emit('update:equipment', {});
+      this.$emit('update:equipment', {
+        head: undefined,
+        cape: undefined,
+        neck: undefined,
+        ammo: undefined,
+        weapon: undefined,
+        body: undefined,
+        shield: undefined,
+        legs: undefined,
+        hands: undefined,
+        feet: undefined,
+        ring: undefined,
+      });
     },
   },
 };
@@ -145,6 +166,17 @@ export default {
 
 <style scoped>
 .player-equipment-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player-equipment-clear-button {
+  width: 64px;
+  margin-top: 10px;
+}
+
+.player-equipment-grid {
   display: grid;
   grid-template-columns: 40px 40px 40px;
   grid-template-rows: 40px 40px 40px 40px 40px;

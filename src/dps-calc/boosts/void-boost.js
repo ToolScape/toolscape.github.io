@@ -13,7 +13,7 @@ class Void extends Boost {
     this.elite = elite;
   }
 
-  apply({ meleeDps, rangedDps, mageDps }) {
+  apply({ meleeDps, rangedDps, magicDps }) {
     if (meleeDps) {
       const { effectiveStrengthLevel, effectiveAttackLevel } = meleeDps;
       if (this.type === 'all' || this.type === 'melee') {
@@ -24,9 +24,13 @@ class Void extends Boost {
     if (rangedDps) {
       throw new Error('Not Yet Implemented');
     }
-    if (mageDps) {
+    if (magicDps) {
       throw new Error('Not Yet Implemented');
     }
+  }
+
+  get name() {
+    return 'Void set';
   }
 }
 

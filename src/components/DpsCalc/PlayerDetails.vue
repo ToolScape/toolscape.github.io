@@ -19,7 +19,7 @@
         <v-img src="../../assets/osrs/Vial.png" />
       </osrs-tab>
       <osrs-tab>
-        <v-img src="../../assets/osrs/Account Management.png" />
+        <v-img src="../../assets/osrs/Cog.png" />
       </osrs-tab>
     </osrs-tabs>
     <osrs-tab-items
@@ -29,11 +29,13 @@
       <osrs-tab-item>
         <stance-selector
           :equipped-weapon="weapon"
-          @stance-changed="stanceChanged"
+          @stance-changed="setStance"
         />
       </osrs-tab-item>
       <osrs-tab-item>
-        TODO: Skills
+        <player-skills
+          @skills-changed="setSkills"
+        />
       </osrs-tab-item>
       <osrs-tab-item>
         <div class="player-details-equipment-tab">
@@ -41,24 +43,29 @@
             :equipment.sync="equipment"
           />
           <equipment-stats
-            :bonuses="bonuses"
+            :equipment="equipment"
           />
         </div>
       </osrs-tab-item>
       <osrs-tab-item>
-        TODO: Prayer
+        <player-prayer
+          @active-prayers="prayersChanged"
+        />
       </osrs-tab-item>
       <osrs-tab-item>
-        TODO: Boosts
+        <player-potions
+          @potions-changed="potionsChanged"
+        />
       </osrs-tab-item>
       <osrs-tab-item>
-        TODO: Extra settings
+        <player-settings />
       </osrs-tab-item>
     </osrs-tab-items>
   </osrs-container>
 </template>
 
 <script>
+import BoostManager from '../../dps-calc/boost.manager';
 import OsrsContainer from '../OsrsContainer.vue';
 import OsrsTabs from '../OsrsTabs/OsrsTabs.vue';
 import OsrsTab from '../OsrsTabs/OsrsTab.vue';
@@ -67,11 +74,18 @@ import OsrsTabItems from '../OsrsTabs/OsrsTabItems.vue';
 import OsrsTabItem from '../OsrsTabs/OsrsTabItem.vue';
 import PlayerEquipment from './PlayerEquipment.vue';
 import EquipmentStats from './EquipmentStats.vue';
-import Player from '../../dps-calc/player';
+import PlayerSkills from './PlayerSkills.vue';
+import PlayerPrayer from './PlayerPrayer.vue';
+import PlayerPotions from './PlayerPotions.vue';
+import PlayerSettings from './PlayerSettings.vue';
 
 export default {
   name: 'PlayerDetails',
   components: {
+    PlayerSettings,
+    PlayerPotions,
+    PlayerPrayer,
+    PlayerSkills,
     EquipmentStats,
     PlayerEquipment,
     OsrsTabItems,
@@ -83,34 +97,68 @@ export default {
   },
   data() {
     return {
-      selectedTab: 0,
-      equipment: undefined,
-      skills: undefined,
-      boosts: undefined,
-      stance: undefined,
+      selectedTab: 2,
+      equipment: {},
+      skills: {},
+      stance: {},
+      boosts: [],
+      activePrayers: [],
+      potions: [],
     };
   },
   computed: {
-    player() {
-      return new Player({
-        skills: this.skills || {},
-        equipment: this.equipment || {},
-        boosts: this.boosts || [],
-        stance: this.stance,
-      });
-    },
     weapon() {
       return this.equipment && this.equipment.weapon ? this.equipment.weapon : undefined;
     },
-    bonuses() {
-      return this.player ? this.player.bonuses : undefined;
+  },
+  watch: {
+    equipment: {
+      immediate: true,
+      handler: function equipmentChanged(equipment) {
+        this.$emit('equipment-changed', equipment);
+        this.updateBoosts();
+      },
+    },
+    skills: {
+      immediate: true,
+      handler: function skillsChanged(skills) {
+        this.$emit('skills-changed', skills);
+      },
+    },
+    stance: {
+      immediate: true,
+      handler: function stanceChanged(stance) {
+        this.$emit('stance-changed', stance);
+      },
+    },
+    boosts: {
+      immediate: true,
+      handler: function boostsChanged(boosts) {
+        this.$emit('boosts-changed', boosts);
+      },
     },
   },
   methods: {
-    stanceChanged(stance) {
+    setStance(stance) {
       this.stance = stance;
     },
-    itemEquipped() {
+    setSkills(skills) {
+      this.skills = skills;
+    },
+    updateBoosts() {
+      this.boosts = [
+        ...BoostManager.getPrayerBoosts(this.activePrayers),
+        ...BoostManager.getEquipmentBoosts(this.equipment),
+        ...BoostManager.getPotionBoosts(this.potions),
+      ];
+    },
+    prayersChanged(activePrayers) {
+      this.activePrayers = activePrayers;
+      this.updateBoosts();
+    },
+    potionsChanged(potions) {
+      this.potions = potions;
+      this.updateBoosts();
     },
   },
 };
@@ -119,10 +167,12 @@ export default {
 <style scoped>
 .player-details-container {
   position: relative;
+  min-width: 360px;
   max-width: 400px;
-  min-height: 400px;
+  min-height: 520px;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .player-details-tab-items {

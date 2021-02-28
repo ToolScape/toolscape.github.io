@@ -36,6 +36,16 @@ class DataFetcher {
   fetchItemJsonSlotContents() {
     return this.fetchContents('docs/items-json-slot');
   }
+
+  fetchPlayerHiScores(name) {
+    return axios.post('https://europe-west1-toolscape.cloudfunctions.net/osrs-hi-score',
+      undefined,
+      {
+        params: {
+          name,
+        },
+      });
+  }
 }
 
 export default new DataFetcher();

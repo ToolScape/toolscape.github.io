@@ -3,6 +3,8 @@ class Dps {
 
   skills;
 
+  equipment;
+
   bonuses;
 
   boosts;
@@ -14,9 +16,10 @@ class Dps {
   target;
 
   constructor({
-    skills, bonuses, boosts, stance, weapon,
+    skills, equipment, bonuses, boosts, stance, weapon,
   }, target) {
     this.skills = { ...skills };
+    this.equipment = { ...equipment };
     this.bonuses = { ...bonuses };
     this.boosts = [...boosts];
     this.stance = stance;

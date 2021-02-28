@@ -24,7 +24,7 @@ export default {
   border: 2px solid var(--osrs-pale-brown);
   border-radius: 8px 8px 0 0;
   padding: 2px 8px;
-  background: var(--osrs-dark-brown);
+  background: var(--osrs-darker-brown);
   user-select: none;
   cursor: pointer;
   display: flex;
