@@ -25,6 +25,10 @@ class ItemsManager {
   getAll() {
     return DataManager.db.items.toArray();
   }
+
+  getById(id) {
+    return DataManager.db.items.get(id);
+  }
 }
 
 export default new ItemsManager();

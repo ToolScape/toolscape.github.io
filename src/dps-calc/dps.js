@@ -15,16 +15,26 @@ class Dps {
 
   target;
 
+  debuffedTarget;
+
+  settings;
+
+  // key: name
+  // value: modifier
+  damageModifiers = new Map();
+
   constructor({
     skills, equipment, bonuses, boosts, stance, weapon,
-  }, target) {
+  }, target, settings) {
     this.skills = { ...skills };
     this.equipment = { ...equipment };
     this.bonuses = { ...bonuses };
     this.boosts = [...boosts];
     this.stance = stance;
     this.weapon = weapon;
-    this.target = target;
+    this.target = { ...target };
+    this.debuffedTarget = { ...target };
+    this.settings = settings;
   }
 
   setSkill(name, level) {
@@ -40,6 +50,14 @@ class Dps {
       this.bonuses[name] = value;
     } else {
       throw new Error(`Bonus '${name}' not found.`);
+    }
+  }
+
+  addDamageModifier(name, modifier) {
+    if (this.damageModifiers.has(name)) {
+      throw new Error(`Attempting to add ${name} modifier to the list twice`);
+    } else {
+      this.damageModifiers.set(name, modifier);
     }
   }
 

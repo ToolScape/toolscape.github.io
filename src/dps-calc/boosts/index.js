@@ -4,3 +4,6 @@ export { default as OverloadPlus } from './overload-plus';
 export { default as AttackPotion } from './attack-potion';
 export { default as SuperAttackPotion } from './super-attack-potion';
 export { default as ZamorakBrew } from './zamorak-brew';
+export { default as BgsSpec } from './bgs-spec';
+export { default as DwhSpec } from './dwh-spec';
+export { default as ArclightSpec } from './arclight-spec';

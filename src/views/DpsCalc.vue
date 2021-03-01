@@ -6,13 +6,15 @@
         @skills-changed="setSkills"
         @stance-changed="setStance"
         @boosts-changed="setBoosts"
-      />
-      <target-details
-        @target-changed="setTarget"
+        @settings-changed="setSettings"
       />
 
       <calculation-result
         :dps-result="dpsResult"
+      />
+
+      <target-details
+        @target-changed="setTarget"
       />
     </div>
   </v-container>
@@ -41,6 +43,7 @@ export default {
         boosts: undefined,
       },
       target: undefined,
+      settings: undefined,
     };
   },
   computed: {
@@ -61,6 +64,7 @@ export default {
             boosts: this.player.boosts,
           }),
           this.target,
+          this.settings,
         );
       }
       return undefined;
@@ -81,6 +85,9 @@ export default {
     },
     setTarget(target) {
       this.target = target;
+    },
+    setSettings(settings) {
+      this.settings = settings;
     },
   },
 };

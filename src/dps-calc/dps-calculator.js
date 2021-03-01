@@ -1,8 +1,8 @@
 import MeleeDps from './melee-dps';
 
 class DpsCalculator {
-  calculate(player, target) {
-    const meleeDps = new MeleeDps(player, target);
+  calculate(player, target, settings) {
+    const meleeDps = new MeleeDps(player, target, settings);
     return meleeDps.calculate();
   }
 }

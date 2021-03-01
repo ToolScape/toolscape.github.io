@@ -9,6 +9,7 @@ import Piety from './boosts/piety';
 import {
   BlackMask,
   VoidSet,
+  DharoksSet,
 } from './item-effects';
 
 import {
@@ -18,12 +19,16 @@ import {
   AttackPotion,
   SuperAttackPotion,
   ZamorakBrew,
+  BgsSpec,
+  DwhSpec,
+  ArclightSpec,
 } from './boosts';
 
 class BoostManager {
   static itemEffects = new Map([
     ['Black mask', BlackMask],
     ['Void set', VoidSet],
+    ['Dharok\'s set', DharoksSet],
   ]);
 
   static potions = new Map([
@@ -84,6 +89,20 @@ class BoostManager {
       return potions.map((potion) => BoostManager.potions.get(potion)).filter(Boolean);
     }
     return [];
+  }
+
+  static getOtherBoosts(settings) {
+    const otherBoosts = [];
+    if (settings.dwhSpecials > 0) {
+      otherBoosts.push(new DwhSpec(settings.dwhSpecials));
+    }
+    if (settings.arclightSpecials > 0) {
+      otherBoosts.push(new ArclightSpec(settings.arclightSpecials));
+    }
+    if (settings.bgsSpecialDamage > 0) {
+      otherBoosts.push(new BgsSpec(settings.bgsSpecialDamage));
+    }
+    return otherBoosts;
   }
 }
 

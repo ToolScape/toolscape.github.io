@@ -48,9 +48,9 @@ export default {
 <style scoped>
 .osrs-number-input-container {
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  margin: 8px 4px;
+  margin: 8px 0;
+  max-width: 100%;
 }
 
 .osrs-number-input {
@@ -62,14 +62,13 @@ export default {
   caret-color: var(--osrs-orange);
   text-indent: 10px;
   color: var(--osrs-orange);
+  max-width: 100%;
 }
 
 .osrs-number-input-prepend {
-  margin-right: 5px;
 }
 
 .osrs-number-input-append {
-  margin-left: 5px;
   display: flex;
   align-items: center;
 }

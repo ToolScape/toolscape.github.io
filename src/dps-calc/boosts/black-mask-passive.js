@@ -11,6 +11,7 @@ class BlackMaskPassive extends Boost {
   }
 
   apply({ meleeDps, rangedDps, magicDps }) {
+    if (!meleeDps.settings.onSlayerTask) return;
     if (meleeDps) {
       meleeDps.setBonus('slayer', 7 / 6);
     }

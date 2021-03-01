@@ -26,6 +26,9 @@ class MeleeDps extends Dps {
     result = Math.floor(result);
     result *= Math.max(this.bonuses.slayer, this.bonuses.undead);
     result = Math.floor(result);
+    this.damageModifiers.forEach((value) => {
+      result = Math.floor(result * value);
+    });
     return result;
   }
 
@@ -39,8 +42,8 @@ class MeleeDps extends Dps {
   }
 
   get defenceRoll() {
-    const targetDefence = this.target.defence_level + 9;
-    const targetStyleDefence = this.target[`defence_${this.attackType}`] + 64;
+    const targetDefence = this.debuffedTarget.defence_level + 9;
+    const targetStyleDefence = this.debuffedTarget[`defence_${this.attackType}`] + 64;
     return targetDefence * targetStyleDefence;
   }
 

@@ -58,7 +58,9 @@
         />
       </osrs-tab-item>
       <osrs-tab-item>
-        <player-settings />
+        <player-settings
+          @settings-changed="settingsChanged"
+        />
       </osrs-tab-item>
     </osrs-tab-items>
   </osrs-container>
@@ -104,6 +106,7 @@ export default {
       boosts: [],
       activePrayers: [],
       potions: [],
+      settings: {},
     };
   },
   computed: {
@@ -114,27 +117,33 @@ export default {
   watch: {
     equipment: {
       immediate: true,
-      handler: function equipmentChanged(equipment) {
+      handler(equipment) {
         this.$emit('equipment-changed', equipment);
         this.updateBoosts();
       },
     },
     skills: {
       immediate: true,
-      handler: function skillsChanged(skills) {
+      handler(skills) {
         this.$emit('skills-changed', skills);
       },
     },
     stance: {
       immediate: true,
-      handler: function stanceChanged(stance) {
+      handler(stance) {
         this.$emit('stance-changed', stance);
       },
     },
     boosts: {
       immediate: true,
-      handler: function boostsChanged(boosts) {
+      handler(boosts) {
         this.$emit('boosts-changed', boosts);
+      },
+    },
+    settings: {
+      immediate: true,
+      handler(settings) {
+        this.$emit('settings-changed', settings);
       },
     },
   },
@@ -150,6 +159,7 @@ export default {
         ...BoostManager.getPrayerBoosts(this.activePrayers),
         ...BoostManager.getEquipmentBoosts(this.equipment),
         ...BoostManager.getPotionBoosts(this.potions),
+        ...BoostManager.getOtherBoosts(this.settings),
       ];
     },
     prayersChanged(activePrayers) {
@@ -158,6 +168,10 @@ export default {
     },
     potionsChanged(potions) {
       this.potions = potions;
+      this.updateBoosts();
+    },
+    settingsChanged(settings) {
+      this.settings = settings;
       this.updateBoosts();
     },
   },

@@ -52,6 +52,7 @@ export default {
   caret-color: var(--osrs-orange);
   text-indent: 10px;
   color: var(--osrs-orange);
+  max-width: 100%;
 }
 
 .osrs-text-input-prepend {

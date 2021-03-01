@@ -2,7 +2,7 @@ import ItemEffect from '../item-effect';
 import Utils from '../../services/utils';
 import VoidBoost from '../boosts/void-boost';
 
-export class Void extends ItemEffect {
+export class VoidSet extends ItemEffect {
   static check(equipment) {
     const voidHelm = Utils.hasEquipped(equipment, 11665)
      || Utils.hasEquipped(equipment, 11664)
@@ -23,4 +23,4 @@ export class Void extends ItemEffect {
   }
 }
 
-export default Void;
+export default VoidSet;
