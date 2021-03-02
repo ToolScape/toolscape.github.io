@@ -7,8 +7,8 @@ class Boost {
   // attack, strength, ranged, magic
   categories = [];
 
-  // true = visible, false = invisible
-  visible = false;
+  // determines whether or not to display this boost
+  show = false;
 
   active = true;
 

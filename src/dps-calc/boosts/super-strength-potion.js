@@ -7,8 +7,8 @@ class SuperStrengthPotion extends Boost {
 
   apply({ meleeDps }) {
     if (meleeDps) {
-      const { effectiveStrengthLevel } = meleeDps;
-      meleeDps.effectiveStrengthLevel += Math.floor(effectiveStrengthLevel * 0.15) + 5;
+      const { effectiveStrength } = meleeDps;
+      meleeDps.effectiveStrength += Math.floor(effectiveStrength * 0.15) + 5;
     }
   }
 

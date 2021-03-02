@@ -30,6 +30,7 @@
         <stance-selector
           :equipped-weapon="weapon"
           @stance-changed="setStance"
+          @spell-selected="spellSelected"
         />
       </osrs-tab-item>
       <osrs-tab-item>
@@ -71,7 +72,7 @@ import BoostManager from '../../dps-calc/boost.manager';
 import OsrsContainer from '../OsrsContainer.vue';
 import OsrsTabs from '../OsrsTabs/OsrsTabs.vue';
 import OsrsTab from '../OsrsTabs/OsrsTab.vue';
-import StanceSelector from './StanceSelector.vue';
+import StanceSelector from './StanceSelection.vue';
 import OsrsTabItems from '../OsrsTabs/OsrsTabItems.vue';
 import OsrsTabItem from '../OsrsTabs/OsrsTabItem.vue';
 import PlayerEquipment from './PlayerEquipment.vue';
@@ -107,6 +108,7 @@ export default {
       activePrayers: [],
       potions: [],
       settings: {},
+      spell: undefined,
     };
   },
   computed: {
@@ -146,6 +148,12 @@ export default {
         this.$emit('settings-changed', settings);
       },
     },
+    spell: {
+      immediate: true,
+      handler(spell) {
+        this.$emit('spell-changed', spell);
+      },
+    },
   },
   methods: {
     setStance(stance) {
@@ -173,6 +181,9 @@ export default {
     settingsChanged(settings) {
       this.settings = settings;
       this.updateBoosts();
+    },
+    spellSelected(spell) {
+      this.spell = spell;
     },
   },
 };

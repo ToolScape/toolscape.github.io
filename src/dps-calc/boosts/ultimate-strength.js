@@ -5,8 +5,8 @@ class UltimateStrength extends Boost {
 
   apply({ meleeDps }) {
     if (meleeDps) {
-      const { effectiveStrengthLevel } = meleeDps;
-      meleeDps.effectiveStrengthLevel = Math.floor(effectiveStrengthLevel * 1.15);
+      const { effectiveStrength } = meleeDps;
+      meleeDps.effectiveStrength = Math.floor(effectiveStrength * 1.15);
     }
   }
 

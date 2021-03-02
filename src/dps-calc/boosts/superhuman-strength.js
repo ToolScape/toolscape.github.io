@@ -5,8 +5,8 @@ class SuperhumanStrength extends Boost {
 
   apply({ meleeDps }) {
     if (meleeDps) {
-      const { effectiveStrengthLevel } = meleeDps;
-      meleeDps.effectiveStrengthLevel = Math.floor(effectiveStrengthLevel * 1.1);
+      const { effectiveStrength } = meleeDps;
+      meleeDps.effectiveStrength = Math.floor(effectiveStrength * 1.1);
     }
   }
 

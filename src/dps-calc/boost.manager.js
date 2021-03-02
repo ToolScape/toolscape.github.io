@@ -10,6 +10,8 @@ import {
   BlackMask,
   VoidSet,
   DharoksSet,
+  TwistedBow,
+  PoweredStaves,
 } from './item-effects';
 
 import {
@@ -19,6 +21,19 @@ import {
   AttackPotion,
   SuperAttackPotion,
   ZamorakBrew,
+  MagicPotion,
+  ImbuedHeart,
+  SuperMagicPotion,
+  RangingPotion,
+  SuperRangingPotion,
+  SharpEye,
+  HawkEye,
+  EagleEye,
+  Rigour,
+  MysticWill,
+  MysticLore,
+  MysticMight,
+  Augury,
   BgsSpec,
   DwhSpec,
   ArclightSpec,
@@ -29,6 +44,8 @@ class BoostManager {
     ['Black mask', BlackMask],
     ['Void set', VoidSet],
     ['Dharok\'s set', DharoksSet],
+    ['Twisted bow', TwistedBow],
+    ['Powered staves', PoweredStaves],
   ]);
 
   static potions = new Map([
@@ -37,6 +54,11 @@ class BoostManager {
     ['Attack potion', new AttackPotion()],
     ['Super attack potion', new SuperAttackPotion()],
     ['Zamorak brew', new ZamorakBrew()],
+    ['Magic potion', new MagicPotion()],
+    ['Super magic potion', new SuperMagicPotion()],
+    ['Imbued heart', new ImbuedHeart()],
+    ['Ranging potion', new RangingPotion()],
+    ['Super ranging potion', new SuperRangingPotion()],
     ['Overload (+)', new OverloadPlus()],
   ]);
 
@@ -49,14 +71,15 @@ class BoostManager {
     ['Incredible Reflexes', new IncredibleReflexes()],
     ['Chivalry', new Chivalry()],
     ['Piety', new Piety()],
+    ['Sharp Eye', new SharpEye()],
+    ['Hawk Eye', new HawkEye()],
+    ['Eagle Eye', new EagleEye()],
+    ['Rigour', new Rigour()],
+    ['Mystic Will', new MysticWill()],
+    ['Mystic Lore', new MysticLore()],
+    ['Mystic Might', new MysticMight()],
+    ['Augury', new Augury()],
   ]);
-
-  static addItemEffect(name, itemEffect) {
-    if (BoostManager.itemEffects.has(name)) {
-      throw new Error(`Attempting to add ${name} to the item effects twice. Make sure to only add item effects once.`);
-    }
-    BoostManager.itemEffects.set(name, itemEffect);
-  }
 
   /**
    * Pass an array of active prayers get back their boost classes

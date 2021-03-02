@@ -5,12 +5,11 @@ class OverloadPlus extends Boost {
 
   categories = ['potion', 'strength', 'attack', 'ranged', 'magic'];
 
-  apply({ meleeDps }) {
-    if (meleeDps) {
-      const { effectiveStrengthLevel, effectiveAttackLevel } = meleeDps;
-      meleeDps.effectiveStrengthLevel += Math.floor(effectiveStrengthLevel * 0.16) + 6;
-      meleeDps.effectiveAttackLevel += Math.floor(effectiveAttackLevel * 0.16) + 6;
-    }
+  apply({ meleeDps, rangedDps, magicDps }) {
+    const dpsInstance = meleeDps || rangedDps || magicDps;
+    const { effectiveStrength, effectiveAttack } = dpsInstance;
+    dpsInstance.effectiveStrength += Math.floor(effectiveStrength * 0.16) + 6;
+    dpsInstance.effectiveAttack += Math.floor(effectiveAttack * 0.16) + 6;
   }
 
   get name() {

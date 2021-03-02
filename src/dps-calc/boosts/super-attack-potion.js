@@ -7,8 +7,8 @@ class SuperAttackPotion extends Boost {
 
   apply({ meleeDps }) {
     if (meleeDps) {
-      const { effectiveAttackLevel } = meleeDps;
-      meleeDps.effectiveAttackLevel += Math.floor(effectiveAttackLevel * 0.15) + 5;
+      const { effectiveAttack } = meleeDps;
+      meleeDps.effectiveAttack += Math.floor(effectiveAttack * 0.15) + 5;
     }
   }
 

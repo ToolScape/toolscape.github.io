@@ -7,6 +7,7 @@
         @stance-changed="setStance"
         @boosts-changed="setBoosts"
         @settings-changed="setSettings"
+        @spell-changed="setSpell"
       />
 
       <calculation-result
@@ -41,6 +42,7 @@ export default {
         skills: undefined,
         stance: undefined,
         boosts: undefined,
+        spell: undefined,
       },
       target: undefined,
       settings: undefined,
@@ -62,6 +64,7 @@ export default {
             equipment: this.player.equipment,
             stance: this.player.stance,
             boosts: this.player.boosts,
+            spell: this.player.spell,
           }),
           this.target,
           this.settings,
@@ -88,6 +91,9 @@ export default {
     },
     setSettings(settings) {
       this.settings = settings;
+    },
+    setSpell(spell) {
+      this.player.spell = spell;
     },
   },
 };

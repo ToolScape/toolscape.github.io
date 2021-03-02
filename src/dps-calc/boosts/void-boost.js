@@ -15,14 +15,19 @@ class Void extends Boost {
 
   apply({ meleeDps, rangedDps, magicDps }) {
     if (meleeDps) {
-      const { effectiveStrengthLevel, effectiveAttackLevel } = meleeDps;
+      const { effectiveStrength, effectiveAttack } = meleeDps;
       if (this.type === 'all' || this.type === 'melee') {
-        meleeDps.effectiveStrengthLevel = Math.floor(effectiveStrengthLevel * 1.1);
-        meleeDps.effectiveAttackLevel = Math.floor(effectiveAttackLevel * 1.1);
+        meleeDps.effectiveStrength = Math.floor(effectiveStrength * 1.1);
+        meleeDps.effectiveAttack = Math.floor(effectiveAttack * 1.1);
       }
     }
     if (rangedDps) {
-      throw new Error('Not Yet Implemented');
+      const { effectiveStrength, effectiveAttack } = rangedDps;
+      if (this.type === 'all' || this.type === 'ranged') {
+        const strengthMulti = this.elite ? 1.125 : 1.1;
+        rangedDps.effectiveStrength = Math.floor(effectiveStrength * strengthMulti);
+        rangedDps.effectiveAttack = Math.floor(effectiveAttack * 1.1);
+      }
     }
     if (magicDps) {
       throw new Error('Not Yet Implemented');

@@ -1,4 +1,3 @@
-import { camelCase } from 'lodash';
 import PassiveBoost from './boosts/passive-boost';
 import StanceBoost from './boosts/stance-boost';
 
@@ -28,19 +27,19 @@ class Player {
   };
 
   bonuses = {
-    attackStab: 0,
-    attackSlash: 0,
-    attackCrush: 0,
-    attackMagic: 0,
-    attackRanged: 0,
-    defenceStab: 0,
-    defenceSlash: 0,
-    defenceCrush: 0,
-    defenceMagic: 0,
-    defenceRanged: 0,
-    meleeStrength: 0,
-    rangedStrength: 0,
-    magicDamage: 0,
+    attack_stab: 0,
+    attack_slash: 0,
+    attack_crush: 0,
+    attack_magic: 0,
+    attack_ranged: 0,
+    defence_stab: 0,
+    defence_slash: 0,
+    defence_crush: 0,
+    defence_magic: 0,
+    defence_ranged: 0,
+    melee_strength: 0,
+    ranged_strength: 0,
+    magic_damage: 0,
     prayer: 0,
     slayer: 1,
     undead: 1,
@@ -50,8 +49,10 @@ class Player {
 
   stance;
 
+  spell;
+
   constructor({
-    skills, equipment, boosts, stance,
+    skills, equipment, boosts, stance, spell,
   }) {
     this.skills = { ...skills };
     this.equipment = { ...equipment };
@@ -62,6 +63,7 @@ class Player {
       boosts: '',
       combat_style: 'punch',
     };
+    this.spell = spell;
     this.calculateBonuses();
   }
 
@@ -75,8 +77,7 @@ class Player {
           .filter((bonus) => skipBonuses.indexOf(bonus) === -1)
           .forEach((bonus) => {
             const bonusValue = equipBonuses[bonus];
-            const camelCasedBonus = camelCase(bonus);
-            this.bonuses[camelCasedBonus] += bonusValue;
+            this.bonuses[bonus] += bonusValue;
           });
       });
   }

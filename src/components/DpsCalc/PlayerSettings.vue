@@ -14,6 +14,7 @@
       </osrs-tooltip>
       <osrs-number-input
         v-model="settings.dwhSpecials"
+        :max="99"
         @input="updateSettings"
       />
       <osrs-tooltip>
@@ -29,6 +30,7 @@
       </osrs-tooltip>
       <osrs-number-input
         v-model="settings.arclightSpecials"
+        :max="99"
         @input="updateSettings"
       />
       <osrs-tooltip>
@@ -45,6 +47,7 @@
       </osrs-tooltip>
       <osrs-number-input
         v-model="settings.bgsSpecialDamage"
+        :max="999"
         @input="updateSettings"
       />
       <v-img
@@ -137,13 +140,15 @@ export default {
 .player-settings-container {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  margin: 10px;
 }
 
 .player-settings-grid {
   display: grid;
-  grid-template-columns: 32px 1fr;
+  grid-template-columns: 32px 1fr 32px 1fr;
   grid-auto-rows: 32px;
-  grid-gap: 8px;
+  grid-gap: 16px;
   align-items: center;
 }
 </style>

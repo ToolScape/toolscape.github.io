@@ -5,8 +5,8 @@ class ImprovedReflexes extends Boost {
 
   apply({ meleeDps }) {
     if (meleeDps) {
-      const { effectiveAttackLevel } = meleeDps;
-      meleeDps.effectiveAttackLevel = Math.floor(effectiveAttackLevel * 1.1);
+      const { effectiveAttack } = meleeDps;
+      meleeDps.effectiveAttack = Math.floor(effectiveAttack * 1.1);
     }
   }
 

@@ -12,11 +12,9 @@ class BgsSpec extends Boost {
     this.amount = amount;
   }
 
-  apply({ meleeDps }) {
-    if (meleeDps) {
-      const { debuffedTarget } = meleeDps;
-      debuffedTarget.defence_level = Math.max(0, debuffedTarget.defence_level - this.amount);
-    }
+  apply({ meleeDps, rangedDps, magicDps }) {
+    const { debuffedTarget } = meleeDps || rangedDps || magicDps;
+    debuffedTarget.defence_level = Math.max(0, debuffedTarget.defence_level - this.amount);
   }
 
   get name() {

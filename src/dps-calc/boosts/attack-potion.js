@@ -7,8 +7,8 @@ class AttackPotion extends Boost {
 
   apply({ meleeDps }) {
     if (meleeDps) {
-      const { effectiveAttackLevel } = meleeDps;
-      meleeDps.effectiveAttackLevel += Math.floor(effectiveAttackLevel * 0.1) + 3;
+      const { effectiveAttack } = meleeDps;
+      meleeDps.effectiveAttack += Math.floor(effectiveAttack * 0.1) + 3;
     }
   }
 

@@ -11,6 +11,8 @@ class Dps {
 
   stance;
 
+  spell;
+
   weapon;
 
   target;
@@ -23,8 +25,26 @@ class Dps {
   // value: modifier
   damageModifiers = new Map();
 
+  // key: name
+  // value: modifier
+  accuracyModifiers = new Map();
+
+  dpsType = 'meleeDps'; // meleeDps, rangedDps, magicDps
+
+  effectiveStrength;
+
+  strengthBonus;
+
+  effectiveAttack;
+
+  attackBonus;
+
+  targetDefence;
+
+  targetDefenceBonus;
+
   constructor({
-    skills, equipment, bonuses, boosts, stance, weapon,
+    skills, equipment, bonuses, boosts, stance, weapon, spell,
   }, target, settings) {
     this.skills = { ...skills };
     this.equipment = { ...equipment };
@@ -35,6 +55,7 @@ class Dps {
     this.target = { ...target };
     this.debuffedTarget = { ...target };
     this.settings = settings;
+    this.spell = spell;
   }
 
   setSkill(name, level) {
@@ -55,10 +76,75 @@ class Dps {
 
   addDamageModifier(name, modifier) {
     if (this.damageModifiers.has(name)) {
-      throw new Error(`Attempting to add ${name} modifier to the list twice`);
+      throw new Error(`Attempting to add ${name} damage modifier to the list twice`);
     } else {
       this.damageModifiers.set(name, modifier);
     }
+  }
+
+  addAccuracyModifier(name, modifier) {
+    if (this.accuracyModifiers.has(name)) {
+      throw new Error(`Attempting to add ${name} accuracy modifier to the list twice`);
+    } else {
+      this.accuracyModifiers.set(name, modifier);
+    }
+  }
+
+  calculate() {
+    this.boosts.sort((a, b) => b.priority - a.priority)
+      .forEach((boost) => {
+        boost.apply({ [this.dpsType]: this });
+      });
+
+    return this;
+  }
+
+  get maxHit() {
+    let result = this.effectiveStrength;
+    result *= (this.strengthBonus + 64);
+    result += 320;
+    result /= 640;
+    result = Math.floor(result);
+    result *= Math.max(this.bonuses.slayer, this.bonuses.undead);
+    result = Math.floor(result);
+    this.damageModifiers.forEach((value) => {
+      result = Math.floor(result * value);
+    });
+    return result;
+  }
+
+  get attackRoll() {
+    let result = this.effectiveAttack;
+    result *= (this.attackBonus + 64);
+    result *= Math.max(this.bonuses.slayer, this.bonuses.undead);
+    result = Math.floor(result);
+    this.accuracyModifiers.forEach((value) => {
+      result = Math.floor(result * value);
+    });
+    return result;
+  }
+
+  get defenceRoll() {
+    const targetDefence = this.targetDefence + 9;
+    const targetStyleDefence = this.targetDefenceBonus + 64;
+    return targetDefence * targetStyleDefence;
+  }
+
+  get hitChance() {
+    const { attackRoll } = this;
+    const { defenceRoll } = this;
+    if (attackRoll > defenceRoll) {
+      return 1 - ((defenceRoll + 2) / (2 * attackRoll + 1));
+    }
+    return attackRoll / (2 * defenceRoll + 1);
+  }
+
+  get averageDamage() {
+    return this.maxHit * this.hitChance / 2;
+  }
+
+  get dps() {
+    return this.averageDamage / this.attackSpeedInSeconds;
   }
 
   get attackType() {

@@ -7,22 +7,38 @@ class StanceBoost extends Boost {
     if (meleeDps) {
       switch (meleeDps.stance.attack_style) {
         case 'aggressive':
-          meleeDps.effectiveStrengthLevel += 3;
+          meleeDps.effectiveStrength += 3;
           break;
         case 'accurate':
-          meleeDps.effectiveAttackLevel += 3;
+          meleeDps.effectiveAttack += 3;
           break;
         case 'controlled':
-          meleeDps.effectiveStrengthLevel += 1;
-          meleeDps.effectiveAttackLevel += 1;
+          meleeDps.effectiveStrength += 1;
+          meleeDps.effectiveAttack += 1;
           break;
       }
     }
     if (rangedDps) {
-      throw new Error('NYE');
+      switch (rangedDps.stance.combat_style) {
+        case 'accurate':
+          rangedDps.effectiveStrength += 3;
+          rangedDps.effectiveAttack += 3;
+          break;
+        case 'rapid':
+        case 'flare':
+          rangedDps.isRapid = true;
+          break;
+      }
     }
     if (magicDps) {
-      throw new Error('NYE');
+      switch (magicDps.stance.combat_style) {
+        case 'accurate':
+          magicDps.effectiveAttack += 3;
+          break;
+        case 'longrange':
+          magicDps.effectiveAttack += 1;
+          break;
+      }
     }
   }
 

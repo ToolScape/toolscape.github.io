@@ -1,6 +1,3 @@
-player settings:
-bgs, dwh, on task, dharok, darklight (weaken), vulnerability
-
 improve selection screens
 
 refactor reuse of osrs tile (skill tile, total level tile, flat button)

@@ -5,8 +5,8 @@ class IncredibleReflexes extends Boost {
 
   apply({ meleeDps }) {
     if (meleeDps) {
-      const { effectiveAttackLevel } = meleeDps;
-      meleeDps.effectiveAttackLevel = Math.floor(effectiveAttackLevel * 1.15);
+      const { effectiveAttack } = meleeDps;
+      meleeDps.effectiveAttack = Math.floor(effectiveAttack * 1.15);
     }
   }
 

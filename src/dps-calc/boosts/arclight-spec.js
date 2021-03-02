@@ -12,14 +12,12 @@ class ArclightSpec extends Boost {
     this.amount = amount;
   }
 
-  apply({ meleeDps }) {
-    if (meleeDps) {
-      const { debuffedTarget, target } = meleeDps;
-      for (let i = 0; i < this.amount; i++) {
-        const reduction = target.defence_level * (this.isTargetDemon(target) ? 0.1 : 0.05);
-        debuffedTarget.defence_level = Math.max(0,
-          Math.ceil(debuffedTarget.defence_level - reduction));
-      }
+  apply({ meleeDps, rangedDps, magicDps }) {
+    const { debuffedTarget, target } = meleeDps || rangedDps || magicDps;
+    for (let i = 0; i < this.amount; i++) {
+      const reduction = target.defence_level * (this.isTargetDemon(target) ? 0.1 : 0.05);
+      debuffedTarget.defence_level = Math.max(0,
+        Math.ceil(debuffedTarget.defence_level - reduction));
     }
   }
 
