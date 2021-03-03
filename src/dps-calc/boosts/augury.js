@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class Augury extends Boost {
-  priority = 9;
+  priority = 900;
 
   apply({ magicDps }) {
     if (magicDps) {

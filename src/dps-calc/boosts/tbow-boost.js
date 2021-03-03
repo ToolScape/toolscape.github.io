@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class TbowBoost extends Boost {
-  priority = 1;
+  priority = 100;
 
   apply({ rangedDps }) {
     if (rangedDps) {

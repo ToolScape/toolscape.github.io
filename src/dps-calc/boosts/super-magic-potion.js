@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class SuperMagicPotion extends Boost {
-  priority = 10;
+  priority = 1000;
 
   categories = ['potion', 'magic'];
 

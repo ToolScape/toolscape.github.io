@@ -1,6 +1,6 @@
 import ItemEffect from '../item-effect';
 import Utils from '../../services/utils';
-import BlackMaskPassive from '../boosts/black-mask-passive';
+import { BlackMaskPassive } from '../boosts';
 
 class BlackMask extends ItemEffect {
   static name = 'Black mask';

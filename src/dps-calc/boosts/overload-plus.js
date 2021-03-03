@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class OverloadPlus extends Boost {
-  priority = 10;
+  priority = 1000;
 
   categories = ['potion', 'strength', 'attack', 'ranged', 'magic'];
 

@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class DwhSpec extends Boost {
-  priority = 3;
+  priority = 500;
 
   categories = ['special'];
 

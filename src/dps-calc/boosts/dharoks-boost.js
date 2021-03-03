@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class DharoksBoost extends Boost {
-  priority = 1;
+  priority = 100;
 
   apply({ meleeDps }) {
     if (meleeDps) {

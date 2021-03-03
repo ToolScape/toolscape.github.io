@@ -12,6 +12,20 @@ import {
   DharoksSet,
   TwistedBow,
   PoweredStaves,
+  DragonHunterCrossbow,
+  DragonHunterLance,
+  SalveAmulet,
+  CrawsBow,
+  ViggorasChainmace,
+  ThammaronsSceptre,
+  Arclight,
+  Keris,
+  LeafBladedBattleaxe,
+  ChaosGauntlets,
+  BerserkerNecklace,
+  BrimstoneRing,
+  InquisitorsArmour,
+  ObsidianArmour,
 } from './item-effects';
 
 import {
@@ -41,11 +55,25 @@ import {
 
 class BoostManager {
   static itemEffects = new Map([
-    ['Black mask', BlackMask],
-    ['Void set', VoidSet],
-    ['Dharok\'s set', DharoksSet],
-    ['Twisted bow', TwistedBow],
-    ['Powered staves', PoweredStaves],
+    [BlackMask.name, BlackMask],
+    [VoidSet.name, VoidSet],
+    [DharoksSet.name, DharoksSet],
+    [TwistedBow.name, TwistedBow],
+    [PoweredStaves.name, PoweredStaves],
+    [DragonHunterCrossbow.name, DragonHunterCrossbow],
+    [DragonHunterLance.name, DragonHunterLance],
+    [SalveAmulet.name, SalveAmulet],
+    [CrawsBow.name, CrawsBow],
+    [ViggorasChainmace.name, ViggorasChainmace],
+    [ThammaronsSceptre.name, ThammaronsSceptre],
+    [Arclight.name, Arclight],
+    [Keris.name, Keris],
+    [LeafBladedBattleaxe.name, LeafBladedBattleaxe],
+    [ChaosGauntlets.name, ChaosGauntlets],
+    [BerserkerNecklace.name, BerserkerNecklace],
+    [BrimstoneRing.name, BrimstoneRing],
+    [InquisitorsArmour.name, InquisitorsArmour],
+    [ObsidianArmour.name, ObsidianArmour],
   ]);
 
   static potions = new Map([

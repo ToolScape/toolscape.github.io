@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class Void extends Boost {
-  priority = 6;
+  priority = 700;
 
   type = 'all'; // melee, ranged, mage, all
 
@@ -30,7 +30,13 @@ class Void extends Boost {
       }
     }
     if (magicDps) {
-      throw new Error('Not Yet Implemented');
+      const { effectiveAttack } = magicDps;
+      if (this.type === 'all' || this.type === 'mage') {
+        magicDps.effectiveAttack = Math.floor(effectiveAttack * 1.45);
+        if (this.elite) {
+          magicDps.bonusMagicDamage += 2.5;
+        }
+      }
     }
   }
 

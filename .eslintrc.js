@@ -28,5 +28,6 @@ module.exports = {
     'no-param-reassign': 0,
     'default-case': 0,
     'no-mixed-operators': 0,
+    'no-restricted-syntax': ['error', 'ForInStatement', 'LabeledStatement', 'WithStatement'],
   },
 };

@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class BurstOfStrength extends Boost {
-  priority = 9;
+  priority = 900;
 
   apply({ meleeDps }) {
     if (meleeDps) {

@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class Rigour extends Boost {
-  priority = 9;
+  priority = 900;
 
   apply({ rangedDps }) {
     if (rangedDps) {

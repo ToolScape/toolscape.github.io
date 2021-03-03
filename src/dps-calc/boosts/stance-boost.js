@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class StanceBoost extends Boost {
-  priority = 8;
+  priority = 800;
 
   apply({ meleeDps, rangedDps, magicDps }) {
     if (meleeDps) {

@@ -1,6 +1,10 @@
 import Dps from './dps';
 
 class MagicDps extends Dps {
+  bonusMagicDamage = 0;
+
+  bonusMaxHit = 0;
+
   calculate() {
     this.dpsType = 'magicDps';
     this.effectiveStrength = this.skills.magic;
@@ -14,6 +18,69 @@ class MagicDps extends Dps {
     this.targetDefenceBonus = this.debuffedTarget.defence_magic;
 
     return this.isInvalid() ? undefined : dps;
+  }
+
+  get maxHit() {
+    let max = 0;
+    if (this.spell) {
+      if (this.isStandardSpell() || this.isAncientSpell()) {
+        max = this.spell.baseMaxHit;
+        if (this.isGodSpell() && this.isCharged()) {
+          max += 10;
+        }
+        if (this.isMagicDart()) {
+          if (this.isEnchantedSlayerStaff()) {
+            max = Math.floor(this.effectiveStrength * (1 / 6)) + 13;
+          } else {
+            max = Math.floor(this.effectiveStrength * 0.1) + 10;
+          }
+        }
+      }
+      if (this.isPowered()) {
+        max = this.spell.baseMaxHit;
+        max += Math.max(0, (this.effectiveStrength - 75) / 3);
+      }
+    } else {
+      // salamanders should be the only ones arriving in this statement
+      if (!this.isSalamander()) throw new Error('A non salamander arrived!');
+      let bonus;
+      switch (this.salamanderColor) {
+        case 'swamp':
+          bonus = 56;
+          break;
+        case 'orange':
+          bonus = 59;
+          break;
+        case 'red':
+          bonus = 77;
+          break;
+        case 'black':
+          bonus = 92;
+          break;
+      }
+      max = Math.floor(0.5 + this.skills.magic * (64 + bonus) / 640);
+    }
+
+    max += this.bonusMaxHit;
+
+    let salveBonus = 1;
+    let slayerBonus = 1;
+    if (this.bonuses.undead >= this.bonuses.slayer) {
+      salveBonus = this.bonuses.undead;
+    } else {
+      slayerBonus = this.bonuses.slayer;
+    }
+
+    let magicDamagBonus = 1 + (this.strengthBonus + this.bonusMagicDamage) / 100;
+    magicDamagBonus += salveBonus - 1;
+    max = Math.floor(max * magicDamagBonus); // Magic damage bonus
+    max = Math.floor(max * slayerBonus);
+
+    for (const value of this.damageModifiers.values()) {
+      max = Math.floor(max * value);
+    }
+
+    return max;
   }
 
   isInvalid() {
@@ -62,50 +129,6 @@ class MagicDps extends Dps {
       return this.spell.castSpeed;
     }
     return 5; // salamander is 5, like most spells
-  }
-
-  get maxHit() {
-    let max = 0;
-    if (this.spell) {
-      if (this.isStandardSpell() || this.isAncientSpell()) {
-        max = this.spell.baseMaxHit;
-        if (this.isGodSpell() && this.isCharged()) {
-          max += 10;
-        }
-        if (this.isMagicDart()) {
-          if (this.isEnchantedSlayerStaff()) {
-            max = Math.floor(this.effectiveStrength * (1 / 6)) + 13;
-          } else {
-            max = Math.floor(this.effectiveStrength * 0.1) + 10;
-          }
-        }
-      }
-      if (this.isPowered()) {
-        max = this.spell.baseMaxHit;
-        max += Math.max(0, (this.effectiveStrength - 75) / 3);
-      }
-    } else {
-      // salamanders should be the only ones arriving in this statement
-      if (!this.isSalamander()) throw new Error('A non salamander arrived!');
-      let bonus;
-      switch (this.salamanderColor) {
-        case 'swamp':
-          bonus = 56;
-          break;
-        case 'orange':
-          bonus = 59;
-          break;
-        case 'red':
-          bonus = 77;
-          break;
-        case 'black':
-          bonus = 92;
-          break;
-      }
-      max = Math.floor(0.5 + this.skills.magic * (64 + bonus) / 640);
-    }
-
-    return Math.floor(max * (1 + this.strengthBonus / 100));
   }
 }
 

@@ -2,7 +2,7 @@ import Boost from '../boost';
 import SpellsManager from '../../services/managers/spells.manager';
 
 class PoweredStaffSpell extends Boost {
-  priority = 2;
+  priority = 500;
 
   categories = ['special'];
 

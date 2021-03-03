@@ -3,6 +3,8 @@ import Utils from '../../services/utils';
 import VoidBoost from '../boosts/void-boost';
 
 export class VoidSet extends ItemEffect {
+  static name = 'Void set';
+
   static check(equipment) {
     const voidHelm = Utils.hasEquipped(equipment, 11665)
      || Utils.hasEquipped(equipment, 11664)

@@ -3,6 +3,8 @@ import Utils from '../../services/utils';
 import DharoksBoost from '../boosts/dharoks-boost';
 
 export class DharoksSet extends ItemEffect {
+  static name = 'Dharok\'s set';
+
   static check(equipment) {
     const dharoksSet = [
       4718, // Dharok's greataxe

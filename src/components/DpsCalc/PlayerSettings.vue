@@ -1,6 +1,7 @@
 <template>
   <div class="player-settings-container">
     <div class="player-settings-grid">
+      <!-- Dwh setting -->
       <osrs-tooltip>
         <template #activator="{ on }">
           <v-img
@@ -17,6 +18,7 @@
         :max="99"
         @input="updateSettings"
       />
+      <!-- Arclight setting -->
       <osrs-tooltip>
         <template #activator="{on}">
           <v-img
@@ -33,6 +35,7 @@
         :max="99"
         @input="updateSettings"
       />
+      <!-- Bgs setting -->
       <osrs-tooltip>
         <template #activator="{ on }">
           <v-img
@@ -50,6 +53,7 @@
         :max="999"
         @input="updateSettings"
       />
+      <!-- Slayer setting -->
       <v-img
         contain
         src="../../assets/osrs/Slayer icon.png"
@@ -64,6 +68,7 @@
         </template>
         <span>Are you on a slayer task?</span>
       </osrs-tooltip>
+      <!-- Hitpoints setting -->
       <osrs-tooltip>
         <template #activator="{ on }">
           <v-img
@@ -81,6 +86,21 @@
         :max="99"
         @input="updateSettings"
       />
+      <!-- Hitpoints setting -->
+      <v-img
+        contain
+        src="../../assets/osrs/Skull icon.png"
+      />
+      <osrs-tooltip>
+        <template #activator="{ on }">
+          <osrs-checkbox
+            v-model="settings.inWilderness"
+            @input="updateSettings"
+            v-on="on"
+          />
+        </template>
+        <span>Is target in wilderness?</span>
+      </osrs-tooltip>
     </div>
   </div>
 </template>
@@ -107,6 +127,7 @@ export default {
         dwhSpecials: 0,
         arclightSpecials: 0,
         onSlayerTask: true,
+        inWilderness: true,
         currentHitpoints: 1,
       },
     };

@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class MysticMight extends Boost {
-  priority = 9;
+  priority = 900;
 
   apply({ magicDps }) {
     if (magicDps) {

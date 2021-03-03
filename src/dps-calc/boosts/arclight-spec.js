@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class ArclightSpec extends Boost {
-  priority = 2;
+  priority = 499;
 
   categories = ['special'];
 

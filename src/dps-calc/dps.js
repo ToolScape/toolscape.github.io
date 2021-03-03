@@ -43,6 +43,8 @@ class Dps {
 
   targetDefenceBonus;
 
+  targetDefenceRollModifiers = new Map();
+
   constructor({
     skills, equipment, bonuses, boosts, stance, weapon, spell,
   }, target, settings) {
@@ -90,6 +92,14 @@ class Dps {
     }
   }
 
+  addTargetDefenceRollModifier(name, modifier) {
+    if (this.targetDefenceRollModifiers.has(name)) {
+      throw new Error(`Attempting to add ${name} target defence roll modifier to the list twice`);
+    } else {
+      this.targetDefenceRollModifiers.set(name, modifier);
+    }
+  }
+
   calculate() {
     this.boosts.sort((a, b) => b.priority - a.priority)
       .forEach((boost) => {
@@ -107,9 +117,9 @@ class Dps {
     result = Math.floor(result);
     result *= Math.max(this.bonuses.slayer, this.bonuses.undead);
     result = Math.floor(result);
-    this.damageModifiers.forEach((value) => {
+    for (const value of this.damageModifiers.values()) {
       result = Math.floor(result * value);
-    });
+    }
     return result;
   }
 
@@ -118,16 +128,20 @@ class Dps {
     result *= (this.attackBonus + 64);
     result *= Math.max(this.bonuses.slayer, this.bonuses.undead);
     result = Math.floor(result);
-    this.accuracyModifiers.forEach((value) => {
+    for (const value of this.accuracyModifiers.values()) {
       result = Math.floor(result * value);
-    });
+    }
     return result;
   }
 
   get defenceRoll() {
     const targetDefence = this.targetDefence + 9;
     const targetStyleDefence = this.targetDefenceBonus + 64;
-    return targetDefence * targetStyleDefence;
+    let result = targetDefence * targetStyleDefence;
+    for (const value of this.targetDefenceRollModifiers.values()) {
+      result = Math.floor(result * value);
+    }
+    return result;
   }
 
   get hitChance() {

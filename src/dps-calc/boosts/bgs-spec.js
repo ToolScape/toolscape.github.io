@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class BgsSpec extends Boost {
-  priority = 1;
+  priority = 100;
 
   categories = ['special'];
 

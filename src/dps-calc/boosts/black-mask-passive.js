@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class BlackMaskPassive extends Boost {
-  categories = ['equipment', 'attack', 'strength'];
+  categories = ['equipment', 'attack', 'strength', 'magic', 'ranged'];
 
   imbued = false;
 
@@ -11,16 +11,15 @@ class BlackMaskPassive extends Boost {
   }
 
   apply({ meleeDps, rangedDps, magicDps }) {
-    if (!meleeDps.settings.onSlayerTask) return;
+    const dpsInstance = meleeDps || rangedDps || magicDps;
+    if (!dpsInstance.settings.onSlayerTask) return;
     if (meleeDps) {
       meleeDps.setBonus('slayer', 7 / 6);
     }
     if (this.imbued) {
-      if (rangedDps) {
-        throw new Error('Not Yet Implemented');
-      }
-      if (magicDps) {
-        throw new Error('Not Yet Implemented');
+      if (magicDps || rangedDps) {
+        const magicOrRanged = rangedDps || magicDps;
+        magicOrRanged.setBonus('slayer', 1.15);
       }
     }
   }

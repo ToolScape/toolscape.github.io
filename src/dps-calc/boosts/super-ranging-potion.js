@@ -1,7 +1,7 @@
 import Boost from '../boost';
 
 class SuperRangingPotion extends Boost {
-  priority = 10;
+  priority = 1000;
 
   categories = ['potion', 'ranged'];
 

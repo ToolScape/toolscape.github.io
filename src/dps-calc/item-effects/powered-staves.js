@@ -3,7 +3,7 @@ import Utils from '../../services/utils';
 import PoweredStaffSpell from '../boosts/powered-staff-spell';
 
 class PoweredStaves extends ItemEffect {
-  static name = 'Black mask';
+  static name = 'Powered staves';
 
   static tridentOfTheSeas = [11907, 22288];
 
