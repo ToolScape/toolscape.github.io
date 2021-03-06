@@ -9,3 +9,5 @@ ruby bolts support
 barrows set effects?
 
 remember last entered stats (store vuex)
+
+custom monster
