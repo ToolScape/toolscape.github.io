@@ -1,11 +1,11 @@
-improve selection screens
-
-refactor reuse of osrs tile (skill tile, total level tile, flat button)
-
 clean up data to remove duplicate or cosmetic variations
 
-add ranged dps
+dps results clean up and useful info
 
-add magic dps
+special attacks
 
-margins on slots that are not being set need to go
+ruby bolts support
+
+barrows set effects?
+
+remember last entered stats (store vuex)

@@ -5,7 +5,7 @@
         contain
         src="../../assets/osrs/Combat icon.png"
       />
-      Combat stats
+      Combat stats (Lv. {{ safeMonster.combat_level }})
     </div>
     <div class="monster-detail-stat monster-detail-hp">
       <v-img

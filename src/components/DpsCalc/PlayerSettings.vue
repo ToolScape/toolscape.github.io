@@ -15,7 +15,7 @@
       </osrs-tooltip>
       <osrs-number-input
         v-model="settings.dwhSpecials"
-        :max="99"
+        :max="9999"
         @input="updateSettings"
       />
       <!-- Arclight setting -->
@@ -32,7 +32,7 @@
       </osrs-tooltip>
       <osrs-number-input
         v-model="settings.arclightSpecials"
-        :max="99"
+        :max="9999"
         @input="updateSettings"
       />
       <!-- Bgs setting -->
@@ -50,7 +50,7 @@
       </osrs-tooltip>
       <osrs-number-input
         v-model="settings.bgsSpecialDamage"
-        :max="999"
+        :max="9999"
         @input="updateSettings"
       />
       <!-- Slayer setting -->

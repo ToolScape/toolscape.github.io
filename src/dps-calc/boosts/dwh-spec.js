@@ -14,13 +14,11 @@ class DwhSpec extends Boost {
 
   apply({ meleeDps, rangedDps, magicDps }) {
     const { debuffedTarget } = meleeDps || rangedDps || magicDps;
-    for (let i = 0; i < this.amount; i++) {
-      debuffedTarget.defence_level = Math.ceil(debuffedTarget.defence_level * 0.7);
-    }
+    debuffedTarget.defence_level = Math.ceil(debuffedTarget.defence_level * 0.7 ** this.amount);
   }
 
   get name() {
-    return 'Dwh special';
+    return `Dragon warhammer special x${this.amount}`;
   }
 }
 

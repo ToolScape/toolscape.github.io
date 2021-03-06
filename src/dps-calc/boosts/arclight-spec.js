@@ -14,11 +14,17 @@ class ArclightSpec extends Boost {
 
   apply({ meleeDps, rangedDps, magicDps }) {
     const { debuffedTarget, target } = meleeDps || rangedDps || magicDps;
-    for (let i = 0; i < this.amount; i++) {
-      const reduction = target.defence_level * (this.isTargetDemon(target) ? 0.1 : 0.05);
-      debuffedTarget.defence_level = Math.max(0,
-        Math.ceil(debuffedTarget.defence_level - reduction));
-    }
+    const percentage = (this.isTargetDemon(target) ? 0.1 : 0.05);
+    const defenceReduction = target.defence_level * Math.max((percentage * this.amount), 0);
+    const strengthReduction = target.strength_level * Math.max((percentage * this.amount), 0);
+    const attackReduction = target.attack_level * Math.max((percentage * this.amount), 0);
+
+    debuffedTarget.defence_level = Math.max(0,
+      Math.ceil(debuffedTarget.defence_level - defenceReduction));
+    debuffedTarget.strength_level = Math.max(0,
+      Math.ceil(debuffedTarget.strength_level - strengthReduction));
+    debuffedTarget.attack_level = Math.max(0,
+      Math.ceil(debuffedTarget.attack_level - attackReduction));
   }
 
   isTargetDemon(target) {
@@ -26,7 +32,7 @@ class ArclightSpec extends Boost {
   }
 
   get name() {
-    return 'Arclight special';
+    return `Arclight special x${this.amount}`;
   }
 }
 

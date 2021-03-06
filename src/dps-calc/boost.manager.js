@@ -26,6 +26,7 @@ import {
   BrimstoneRing,
   InquisitorsArmour,
   ObsidianArmour,
+  ScytheOfVitur,
 } from './item-effects';
 
 import {
@@ -74,6 +75,7 @@ class BoostManager {
     [BrimstoneRing.name, BrimstoneRing],
     [InquisitorsArmour.name, InquisitorsArmour],
     [ObsidianArmour.name, ObsidianArmour],
+    [ScytheOfVitur.name, ScytheOfVitur],
   ]);
 
   static potions = new Map([

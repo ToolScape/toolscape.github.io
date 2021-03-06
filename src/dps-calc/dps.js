@@ -29,6 +29,10 @@ class Dps {
   // value: modifier
   accuracyModifiers = new Map();
 
+  // key: name
+  // value: modifier
+  averageDamageModifier = new Map();
+
   dpsType = 'meleeDps'; // meleeDps, rangedDps, magicDps
 
   effectiveStrength;
@@ -89,6 +93,14 @@ class Dps {
       throw new Error(`Attempting to add ${name} accuracy modifier to the list twice`);
     } else {
       this.accuracyModifiers.set(name, modifier);
+    }
+  }
+
+  addAverageDamageModifier(name, modifier) {
+    if (this.averageDamageModifier.has(name)) {
+      throw new Error(`Attempting to add ${name} average damage modifier to the list twice`);
+    } else {
+      this.averageDamageModifier.set(name, modifier);
     }
   }
 
@@ -154,7 +166,11 @@ class Dps {
   }
 
   get averageDamage() {
-    return this.maxHit * this.hitChance / 2;
+    let avgDmg = this.maxHit * this.hitChance / 2;
+    for (const value of this.averageDamageModifier.values()) {
+      avgDmg *= value;
+    }
+    return avgDmg;
   }
 
   get dps() {

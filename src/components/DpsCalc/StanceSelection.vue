@@ -15,7 +15,7 @@
           >
             <template #activator="{ on }">
               <osrs-flat-button
-                :active="selectedStance === stance"
+                :active="isSelectedStance(stance)"
                 class="stance-selection-stance osrs-text"
                 @click="stanceSelected(stance)"
                 v-on="on"
@@ -47,6 +47,21 @@
         <span class="osrs-text-quill-8 stance-selection-footer">
           Category: {{ category }}
         </span>
+        <div
+          v-if="selectedSpell"
+          class="stance-selection-spell"
+        >
+          <span class="osrs-text-quill-8">
+            Selected spell
+          </span>
+          <span>
+            {{ selectedSpell.name }}
+          </span>
+          <v-img
+            contain
+            :src="`data:image/png;base64,${selectedSpell.icon}`"
+          />
+        </div>
       </div>
     </template>
     <template v-if="selectingSpell">
@@ -126,6 +141,16 @@ export default {
     weapon: {
       immediate: true,
       handler: function weaponChanged() {
+        if (this.selectedStance) {
+          const currentStance = this.selectedStance;
+          const foundSimilarStance = this.stances
+            .find((stance) => stance.attack_style === currentStance.attack_style
+              || stance.combat_style === currentStance.combat_style);
+          if (foundSimilarStance) {
+            this.stanceSelected(foundSimilarStance);
+            return;
+          }
+        }
         this.stanceSelected(this.stances[0]);
       },
     },
@@ -148,6 +173,9 @@ export default {
       this.selectingSpell = false;
       this.selectedSpell = spell;
       this.$emit('spell-selected', spell);
+    },
+    isSelectedStance(stance) {
+      return this.selectedStance === stance;
     },
   },
 };
@@ -175,10 +203,18 @@ export default {
 }
 
 .stance-selection-header {
-  font-size: 16px;
+  font-size: 24px;
 }
 
 .stance-selection-footer {
+  font-size: 24px;
+}
+
+.stance-selection-spell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-size: 16px;
+  margin-top: 20px;
 }
 </style>

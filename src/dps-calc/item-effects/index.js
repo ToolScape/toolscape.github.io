@@ -17,3 +17,4 @@ export { default as BerserkerNecklace } from './berserker-necklace';
 export { default as BrimstoneRing } from './brimstone-ring';
 export { default as InquisitorsArmour } from './inquisitors-armour';
 export { default as ObsidianArmour } from './obsidian-armour';
+export { default as ScytheOfVitur } from './scythe-of-vitur';

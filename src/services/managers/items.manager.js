@@ -22,6 +22,13 @@ class ItemsManager {
     return collection.toArray();
   }
 
+  getDarts() {
+    return DataManager.db.items
+      .toCollection()
+      .filter((item) => /^\w+\sdart$/.test(item.name))
+      .toArray();
+  }
+
   getAll() {
     return DataManager.db.items.toArray();
   }

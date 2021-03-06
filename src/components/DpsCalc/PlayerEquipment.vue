@@ -44,6 +44,13 @@
         @slot-click="selectItem(['shield'], equipment.shield)"
       />
       <player-equip-slot
+        v-if="showDartsSlot"
+        class="player-equip-darts"
+        equip-slot="ammo"
+        :equipped-item="equipment.darts"
+        @slot-click="selectItem(['darts'], equipment.darts)"
+      />
+      <player-equip-slot
         class="player-equip-legs"
         equip-slot="legs"
         :equipped-item="equipment.legs"
@@ -106,6 +113,7 @@ export default {
         hands: undefined,
         feet: undefined,
         ring: undefined,
+        darts: undefined,
       }),
     },
   },
@@ -118,6 +126,12 @@ export default {
       },
     };
   },
+  computed: {
+    showDartsSlot() {
+      const blowpipeId = 12926;
+      return !!(this.equipment.weapon && this.equipment.weapon.id === blowpipeId);
+    },
+  },
   methods: {
     selectItem(slots, equippedItem) {
       this.equipSelectDialog.itemSlots = slots;
@@ -128,12 +142,16 @@ export default {
       const localEquipment = { ...this.equipment };
       if (item) {
         let { slot } = item.equipment;
+        if (/^\w+\sdart$/.test(item.name)) {
+          slot = 'darts';
+        }
         if (item.equipment.slot === '2h') {
           slot = 'weapon';
           localEquipment.shield = undefined;
         }
         if (item.equipment.slot === 'shield' && this.equipment.weapon && this.equipment.weapon.equipment.slot === '2h') {
           localEquipment.weapon = undefined;
+          localEquipment.darts = undefined;
         }
         localEquipment[slot] = item;
       } else {
@@ -158,6 +176,7 @@ export default {
         hands: undefined,
         feet: undefined,
         ring: undefined,
+        darts: undefined,
       });
     },
   },
@@ -184,9 +203,9 @@ export default {
     ". head ."
     "cape neck ammo"
     "weapon body shield"
-    ". legs ."
+    "darts legs ."
     "hands feet ring";
-  justify-items: center;
+  place-items: center;
 }
 
 .player-equip-head {
@@ -231,5 +250,9 @@ export default {
 
 .player-equip-ring {
   grid-area: ring;
+}
+
+.player-equip-darts {
+  grid-area: darts;
 }
 </style>

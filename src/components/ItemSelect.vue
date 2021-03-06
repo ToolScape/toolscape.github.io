@@ -1,34 +1,29 @@
 <template>
-  <v-autocomplete
-    item-text="name"
-    return-object
-    clearable
-    auto-select-first
-    autofocus
-    :items="items"
+  <osrs-autocomplete
     :value="value"
+    :items="items"
+    :auto-focus="autoFocus"
     @input="$emit('input', $event)"
   >
     <template #item="{ item }">
-      <v-list-item-avatar tile>
+      <div class="item-select-list-item">
         <v-img
           contain
           :src="`data:image/png;base64,${item.icon}`"
         />
-      </v-list-item-avatar>
-      <v-list-item-content>
         <v-list-item-title v-text="item.name" />
-        <v-list-item-subtitle v-text="item.examine" />
-      </v-list-item-content>
+      </div>
     </template>
-  </v-autocomplete>
+  </osrs-autocomplete>
 </template>
 
 <script>
 import ItemsManager from '../services/managers/items.manager';
+import OsrsAutocomplete from './OsrsAutocomplete.vue';
 
 export default {
   name: 'ItemSelect',
+  components: { OsrsAutocomplete },
   props: {
     value: {
       type: undefined,
@@ -38,6 +33,10 @@ export default {
       type: Array,
       required: false,
       default: undefined,
+    },
+    autoFocus: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -56,8 +55,27 @@ export default {
   },
   methods: {
     async fetchItems() {
-      this.items = await ItemsManager.getBySlots(this.itemSlots);
+      let slots = [...this.itemSlots];
+      let items = [];
+
+      if (slots.includes('darts')) {
+        items = await ItemsManager.getDarts();
+        slots = slots.filter((i) => i !== 'darts');
+      }
+
+      if (slots && slots.length > 0) {
+        items = [...items, ...await ItemsManager.getBySlots(slots)];
+      }
+      this.items = items;
     },
   },
 };
 </script>
+
+<style>
+.item-select-list-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+</style>

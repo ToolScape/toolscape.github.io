@@ -47,3 +47,4 @@ export { default as BerserkerNecklacePassive } from './berserker-necklace-passiv
 export { default as BrimstoneRingPassive } from './brimstone-ring-passive';
 export { default as InquisitorsArmourPassive } from './inquisitors-armour-passive';
 export { default as ObsidianArmourPassive } from './obsidian-armour-passive';
+export { default as ScytheOfViturPassive } from './scythe-of-vitur-passive';
