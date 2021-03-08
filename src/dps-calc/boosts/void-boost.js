@@ -19,6 +19,7 @@ class Void extends Boost {
       if (this.type === 'all' || this.type === 'melee') {
         meleeDps.effectiveStrength = Math.floor(effectiveStrength * 1.1);
         meleeDps.effectiveAttack = Math.floor(effectiveAttack * 1.1);
+        return true;
       }
     }
     if (rangedDps) {
@@ -27,6 +28,7 @@ class Void extends Boost {
         const strengthMulti = this.elite ? 1.125 : 1.1;
         rangedDps.effectiveStrength = Math.floor(effectiveStrength * strengthMulti);
         rangedDps.effectiveAttack = Math.floor(effectiveAttack * 1.1);
+        return true;
       }
     }
     if (magicDps) {
@@ -36,8 +38,10 @@ class Void extends Boost {
         if (this.elite) {
           magicDps.bonusMagicDamage += 2.5;
         }
+        return true;
       }
     }
+    return false;
   }
 
   get name() {

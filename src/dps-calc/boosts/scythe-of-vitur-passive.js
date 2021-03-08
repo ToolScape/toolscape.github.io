@@ -8,7 +8,9 @@ class ScytheOfViturPassive extends Boost {
   apply({ meleeDps }) {
     if (meleeDps && this.isLarge(meleeDps.target)) {
       meleeDps.addAverageDamageModifier(this.name, 1.75);
+      return true;
     }
+    return false;
   }
 
   isLarge(target) {

@@ -9,7 +9,9 @@ class BerserkerNecklacePassive extends Boost {
   apply({ meleeDps }) {
     if (meleeDps && this.isObsidianMeleeWeapon(meleeDps.equipment)) {
       meleeDps.addDamageModifier(this.name, 1.2);
+      return true;
     }
+    return false;
   }
 
   isObsidianMeleeWeapon(equipment) {

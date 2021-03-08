@@ -14,10 +14,19 @@
 <script>
 export default {
   name: 'OsrsTabs',
+  provide() {
+    return {
+      grow: this.grow,
+    };
+  },
   props: {
     value: {
       type: undefined,
       default: undefined,
+    },
+    grow: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

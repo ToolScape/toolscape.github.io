@@ -9,7 +9,9 @@ class ArclightPassive extends Boost {
     if (meleeDps && this.isTargetDemon(meleeDps.target)) {
       meleeDps.addAccuracyModifier(this.name, 1.7);
       meleeDps.addDamageModifier(this.name, 1.7);
+      return true;
     }
+    return false;
   }
 
   isTargetDemon(target) {

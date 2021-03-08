@@ -20,7 +20,9 @@ class TbowBoost extends Boost {
         + (10 * 3 * targetMagicLevel / 10 - 14) / 100
         - (((3 * targetMagicLevel / 10) - 140) ** 2) / 100;
       rangedDps.addDamageModifier(this.name, Math.min(damageModifier, 250) / 100);
+      return true;
     }
+    return false;
   }
 
   get name() {

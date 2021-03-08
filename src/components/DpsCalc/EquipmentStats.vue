@@ -3,52 +3,52 @@
     <span class="equipment-stats-list-header osrs-text-bold-12">Attack bonus</span>
     <ul class="equipment-stats-list">
       <li class="equipment-stats-list-item">
-        Stab: {{ parseBonus(bonuses.attack_stab) }}
+        Stab: {{ parseBonus(computedBonuses.attack_stab) }}
       </li>
       <li class="equipment-stats-list-item">
-        Slash: {{ parseBonus(bonuses.attack_slash) }}
+        Slash: {{ parseBonus(computedBonuses.attack_slash) }}
       </li>
       <li class="equipment-stats-list-item">
-        Crush: {{ parseBonus(bonuses.attack_crush) }}
+        Crush: {{ parseBonus(computedBonuses.attack_crush) }}
       </li>
       <li class="equipment-stats-list-item">
-        Magic: {{ parseBonus(bonuses.attack_magic) }}
+        Magic: {{ parseBonus(computedBonuses.attack_magic) }}
       </li>
       <li class="equipment-stats-list-item">
-        Range: {{ parseBonus(bonuses.attack_ranged) }}
+        Range: {{ parseBonus(computedBonuses.attack_ranged) }}
       </li>
     </ul>
     <span class="equipment-stats-list-header osrs-text-bold-12">Defence bonus</span>
     <ul class="equipment-stats-list">
       <li class="equipment-stats-list-item">
-        Stab: {{ parseBonus(bonuses.defence_stab) }}
+        Stab: {{ parseBonus(computedBonuses.defence_stab) }}
       </li>
       <li class="equipment-stats-list-item">
-        Slash: {{ parseBonus(bonuses.defence_slash) }}
+        Slash: {{ parseBonus(computedBonuses.defence_slash) }}
       </li>
       <li class="equipment-stats-list-item">
-        Crush: {{ parseBonus(bonuses.defence_crush) }}
+        Crush: {{ parseBonus(computedBonuses.defence_crush) }}
       </li>
       <li class="equipment-stats-list-item">
-        Magic: {{ parseBonus(bonuses.defence_magic) }}
+        Magic: {{ parseBonus(computedBonuses.defence_magic) }}
       </li>
       <li class="equipment-stats-list-item">
-        Range: {{ parseBonus(bonuses.defence_ranged) }}
+        Range: {{ parseBonus(computedBonuses.defence_ranged) }}
       </li>
     </ul>
     <span class="equipment-stats-list-header osrs-text-bold-12">Other bonuses</span>
     <ul class="equipment-stats-list">
       <li class="equipment-stats-list-item">
-        Melee strength: {{ parseBonus(bonuses.melee_strength) }}
+        Melee strength: {{ parseBonus(computedBonuses.melee_strength) }}
       </li>
       <li class="equipment-stats-list-item">
-        Ranged strength: {{ parseBonus(bonuses.ranged_strength) }}
+        Ranged strength: {{ parseBonus(computedBonuses.ranged_strength) }}
       </li>
       <li class="equipment-stats-list-item">
-        Magic damage: {{ parseBonus(bonuses.magic_damage, { magicDamage: true }) }}
+        Magic damage: {{ parseBonus(computedBonuses.magic_damage, { magicDamage: true }) }}
       </li>
       <li class="equipment-stats-list-item">
-        Prayer: {{ parseBonus(bonuses.prayer) }}
+        Prayer: {{ parseBonus(computedBonuses.prayer) }}
       </li>
     </ul>
     <span class="equipment-stats-list-header osrs-text-bold-12">Target-specific</span>
@@ -59,7 +59,7 @@
             class="equipment-stats-list-item"
             v-on="on"
           >
-            Undead: {{ parseBonus(bonuses.undead, { targetSpecific: true }) }}
+            Undead: {{ parseBonus(computedBonuses.undead, { targetSpecific: true }) }}
           </li>
         </template>
         <span>
@@ -73,7 +73,7 @@
             class="equipment-stats-list-item"
             v-on="on"
           >
-            Slayer: {{ parseBonus(bonuses.slayer, { targetSpecific: true }) }}
+            Slayer: {{ parseBonus(computedBonuses.slayer, { targetSpecific: true }) }}
           </li>
         </template>
         <span>
@@ -96,9 +96,14 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    bonuses: {
+      type: Object,
+      default: undefined,
+    },
   },
   computed: {
-    bonuses() {
+    computedBonuses() {
+      if (this.bonuses) return this.bonuses;
       const skipBonuses = ['requirements', 'slot'];
       const bonuses = {
         attack_stab: 0,
@@ -135,7 +140,7 @@ export default {
   methods: {
     parseBonus(bonus = {}, { targetSpecific, magicDamage } = {}) {
       if (targetSpecific) {
-        return `${(bonus - 1) * 100}%`;
+        return `${((bonus - 1) * 100).toFixed(2)}%`;
       }
       if (magicDamage) {
         return `${(bonus).toFixed(1)}%`;

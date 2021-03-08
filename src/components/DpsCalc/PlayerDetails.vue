@@ -45,6 +45,7 @@
           />
           <equipment-stats
             :equipment="equipment"
+            :bonuses="bonuses"
           />
         </div>
       </osrs-tab-item>
@@ -97,6 +98,12 @@ export default {
     OsrsTabs,
     OsrsTab,
     OsrsContainer,
+  },
+  props: {
+    bonuses: {
+      type: Object,
+      default: undefined,
+    },
   },
   data() {
     return {

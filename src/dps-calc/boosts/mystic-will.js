@@ -7,7 +7,9 @@ class MysticWill extends Boost {
     if (magicDps) {
       const { effectiveAttack } = magicDps;
       magicDps.effectiveAttack = Math.floor(effectiveAttack * 1.05);
+      return true;
     }
+    return false;
   }
 
   get name() {

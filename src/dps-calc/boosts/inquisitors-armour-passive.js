@@ -16,7 +16,9 @@ class InquisitorsArmourPassive extends Boost {
     if (meleeDps && this.isCrushStance(meleeDps.stance)) {
       meleeDps.addAccuracyModifier(this.name, this.bonus);
       meleeDps.addDamageModifier(this.name, this.bonus);
+      return true;
     }
+    return false;
   }
 
   isCrushStance(stance) {

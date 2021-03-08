@@ -7,7 +7,9 @@ class ClarityOfThought extends Boost {
     if (meleeDps) {
       const { effectiveAttack } = meleeDps;
       meleeDps.effectiveAttack = Math.floor(effectiveAttack * 1.05);
+      return true;
     }
+    return false;
   }
 
   get name() {

@@ -3,6 +3,8 @@ import Boost from '../boost';
 class StanceBoost extends Boost {
   priority = 800;
 
+  show = false;
+
   apply({ meleeDps, rangedDps, magicDps }) {
     if (meleeDps) {
       switch (meleeDps.stance.attack_style) {
@@ -40,6 +42,7 @@ class StanceBoost extends Boost {
           break;
       }
     }
+    return true;
   }
 
   get name() {

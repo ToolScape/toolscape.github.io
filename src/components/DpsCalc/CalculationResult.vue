@@ -1,10 +1,10 @@
 <template>
   <osrs-container
     class="calc-result-container"
+    @dblclick="clicked"
   >
     <div
       v-if="dpsResult"
-      @click="clicked"
     >
       <div class="calc-result-grid">
         <span class="crg-header">
@@ -13,8 +13,7 @@
         <span class="crg-cell">
           {{ combatType }}
         </span>
-        <span class="crg-cell">
-        </span>
+        <span class="crg-cell" />
         <span class="crg-cell">
           {{ combatType2 }}
         </span>
@@ -55,6 +54,37 @@
           {{ formattedDps2 }}
         </span>
       </div>
+      <osrs-tabs
+        v-model="boostsTab"
+        class="calc-result-boost-tabs"
+        :grow="true"
+      >
+        <osrs-tab
+          v-for="(boosts, index) of computedBoosts"
+          :key="index"
+        >
+          <span>Loadout {{ index + 1 }}</span>
+        </osrs-tab>
+      </osrs-tabs>
+      <osrs-tab-items
+        v-model="boostsTab"
+      >
+        <osrs-tab-item
+          v-for="(boosts, index) of computedBoosts"
+          :key="index"
+        >
+          <ul class="calc-result-boost-list">
+            <li
+              v-for="boost of boosts"
+              :key="boost.name"
+              class="calc-result-boost-list-item"
+              :class="{'boost-inactive': !boost.active}"
+            >
+              {{ boost.name }}
+            </li>
+          </ul>
+        </osrs-tab-item>
+      </osrs-tab-items>
     </div>
   </osrs-container>
 </template>
@@ -63,10 +93,16 @@
 import RangedDps from '../../dps-calc/ranged-dps';
 import MagicDps from '../../dps-calc/magic-dps';
 import OsrsContainer from '../OsrsContainer.vue';
+import OsrsTabs from '../OsrsTabs/OsrsTabs.vue';
+import OsrsTab from '../OsrsTabs/OsrsTab.vue';
+import OsrsTabItems from '../OsrsTabs/OsrsTabItems.vue';
+import OsrsTabItem from '../OsrsTabs/OsrsTabItem.vue';
 
 export default {
   name: 'CalculationResult',
-  components: { OsrsContainer },
+  components: {
+    OsrsTabItem, OsrsTabItems, OsrsTab, OsrsTabs, OsrsContainer,
+  },
   props: {
     dpsResult: {
       type: Object,
@@ -76,6 +112,11 @@ export default {
       type: Object,
       default: undefined,
     },
+  },
+  data() {
+    return {
+      boostsTab: 0,
+    };
   },
   computed: {
     combatType() {
@@ -120,6 +161,16 @@ export default {
       }
       return '';
     },
+    computedBoosts() {
+      const boosts = [];
+      if (this.dpsResult) {
+        boosts.push(this.dpsResult.boosts.filter((boost) => boost.show));
+      }
+      if (this.comparisonDpsResult) {
+        boosts.push(this.comparisonDpsResult.boosts.filter((boost) => boost.show));
+      }
+      return boosts;
+    },
   },
   methods: {
     clicked() {
@@ -140,7 +191,8 @@ export default {
 
 <style scoped>
 .calc-result-container {
-  min-width: 350px;
+  min-width: 360px;
+  max-width: 360px;
 }
 
 .calc-result-grid {
@@ -172,5 +224,30 @@ export default {
 }
 .calc-result-grid .crg-cell-middle {
   font-size: 18px;
+}
+
+.calc-result-boost-tabs {
+  margin-top: 10px;
+}
+
+.calc-result-boost-list {
+  width: 100%;
+  max-width: 340px;
+  max-height: 180px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  list-style: none;
+  padding: 0;
+}
+
+.calc-result-boost-list-item {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.calc-result-boost-list-item.boost-inactive {
+  text-decoration: line-through;
 }
 </style>

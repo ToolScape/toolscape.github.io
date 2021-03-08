@@ -9,7 +9,9 @@ class SuperStrengthPotion extends Boost {
     if (meleeDps) {
       const { effectiveStrength } = meleeDps;
       meleeDps.effectiveStrength += Math.floor(effectiveStrength * 0.15) + 5;
+      return true;
     }
+    return false;
   }
 
   get name() {

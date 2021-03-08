@@ -10,7 +10,9 @@ class SuperMagicPotion extends Boost {
       const { effectiveAttack, effectiveStrength } = magicDps;
       magicDps.effectiveStrength += Math.floor(effectiveStrength * 0.15) + 5;
       magicDps.effectiveAttack += Math.floor(effectiveAttack * 0.15) + 5;
+      return true;
     }
+    return false;
   }
 
   get name() {

@@ -5,7 +5,7 @@
   >
     <div
       class="osrs-tab-container"
-      :class="{'osrs-active-tab': active}"
+      :class="{'osrs-active-tab': active, 'osrs-stretch-tab': grow }"
       @click="toggle"
     >
       <slot />
@@ -16,6 +16,7 @@
 <script>
 export default {
   name: 'OsrsTab',
+  inject: ['grow'],
 };
 </script>
 
@@ -44,5 +45,9 @@ export default {
 .osrs-tab-container.osrs-active-tab {
   background: var(--osrs-brown);
   border-bottom: 2px solid transparent;
+}
+
+.osrs-tab-container.osrs-stretch-tab {
+  flex: 1;
 }
 </style>

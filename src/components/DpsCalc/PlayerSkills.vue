@@ -135,7 +135,7 @@ export default {
 .player-skills-container {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   height: 100%;
 }

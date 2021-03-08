@@ -8,7 +8,9 @@ class Piety extends Boost {
       const { effectiveStrength, effectiveAttack } = meleeDps;
       meleeDps.effectiveStrength = Math.floor(effectiveStrength * 1.23);
       meleeDps.effectiveAttack = Math.floor(effectiveAttack * 1.2);
+      return true;
     }
+    return false;
   }
 
   get name() {

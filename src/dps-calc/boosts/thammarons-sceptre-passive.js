@@ -9,7 +9,9 @@ class ThammaronsSceptrePassive extends Boost {
     if (magicDps && magicDps.settings.inWilderness) {
       magicDps.addAccuracyModifier(this.name, 2);
       magicDps.bonusMagicDamage += 25;
+      return true;
     }
+    return false;
   }
 
   get name() {

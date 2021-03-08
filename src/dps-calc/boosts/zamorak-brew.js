@@ -10,7 +10,9 @@ class ZamorakBrew extends Boost {
       const { effectiveAttack } = meleeDps;
       meleeDps.effectiveAttack += Math.floor(effectiveAttack * 0.2) + 2;
       // strength boost ignored, that way users can combine super strength and this potion.
+      return true;
     }
+    return false;
   }
 
   get name() {

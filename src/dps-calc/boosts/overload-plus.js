@@ -10,6 +10,7 @@ class OverloadPlus extends Boost {
     const { effectiveStrength, effectiveAttack } = dpsInstance;
     dpsInstance.effectiveStrength += Math.floor(effectiveStrength * 0.16) + 6;
     dpsInstance.effectiveAttack += Math.floor(effectiveAttack * 0.16) + 6;
+    return true;
   }
 
   get name() {

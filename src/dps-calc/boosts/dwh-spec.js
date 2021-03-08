@@ -15,6 +15,7 @@ class DwhSpec extends Boost {
   apply({ meleeDps, rangedDps, magicDps }) {
     const { debuffedTarget } = meleeDps || rangedDps || magicDps;
     debuffedTarget.defence_level = Math.ceil(debuffedTarget.defence_level * 0.7 ** this.amount);
+    return true;
   }
 
   get name() {

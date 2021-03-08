@@ -2,6 +2,7 @@
   <v-container fluid>
     <div class="some-class">
       <player-details
+        :bonuses="bonuses(player1)"
         @equipment-changed="setEquipment(player1, $event)"
         @skills-changed="setSkills(player1, $event)"
         @stance-changed="setStance(player1, $event)"
@@ -11,11 +12,12 @@
       />
 
       <calculation-result
-        :dps-result="dpsResult(player1)"
-        :comparison-dps-result="dpsResult(player2)"
+        :dps-result="player1.dpsCalc"
+        :comparison-dps-result="player2.dpsCalc"
       />
 
       <player-details
+        :bonuses="bonuses(player2)"
         @equipment-changed="setEquipment(player2, $event)"
         @skills-changed="setSkills(player2, $event)"
         @stance-changed="setStance(player2, $event)"
@@ -25,6 +27,7 @@
       />
 
       <target-details
+        :debuffed-targets="computedDebuffedTargets"
         @target-changed="setTarget"
       />
     </div>
@@ -48,70 +51,87 @@ export default {
   data() {
     return {
       player1: {
-        equipment: undefined,
-        skills: undefined,
-        stance: undefined,
-        boosts: undefined,
-        spell: undefined,
+        dpsCalc: undefined,
         settings: undefined,
+        details: {
+          equipment: undefined,
+          skills: undefined,
+          stance: undefined,
+          boosts: undefined,
+          spell: undefined,
+        },
       },
       player2: {
-        equipment: undefined,
-        skills: undefined,
-        stance: undefined,
-        boosts: undefined,
-        spell: undefined,
+        dpsCalc: undefined,
         settings: undefined,
+        details: {
+          equipment: undefined,
+          skills: undefined,
+          stance: undefined,
+          boosts: undefined,
+          spell: undefined,
+        },
       },
       target: undefined,
     };
   },
   computed: {
-    weapon() {
-      if (this.equipment && this.equipment.weapon) {
-        return this.equipment.weapon;
+    computedDebuffedTargets() {
+      if (this.player1.dpsCalc && this.player2.dpsCalc) {
+        return [this.player1.dpsCalc.debuffedTarget, this.player2.dpsCalc.debuffedTarget];
       }
       return undefined;
     },
   },
   methods: {
-    dpsResult(player) {
-      console.log('Calculating!');
+    calculate(player) {
+      if (!player && this.target) {
+        this.calculate(this.player1);
+        this.calculate(this.player2);
+      }
       if (player && this.target) {
-        return DpsCalculator.calculate(
+        player.dpsCalc = DpsCalculator.calculate(
           new Player({
-            skills: player.skills,
-            equipment: player.equipment,
-            stance: player.stance,
-            boosts: player.boosts,
-            spell: player.spell,
+            ...player.details,
           }),
           this.target,
           player.settings,
         );
       }
+    },
+    bonuses(player) {
+      if (player && player.dpsCalc) {
+        return player.dpsCalc.bonuses;
+      }
       return undefined;
     },
     setEquipment(player, equipment) {
-      player.equipment = equipment;
+      player.details.equipment = equipment;
+      this.calculate(player);
     },
     setSkills(player, skills) {
-      player.skills = skills;
+      player.details.skills = skills;
+      this.calculate(player);
     },
     setStance(player, stance) {
-      player.stance = stance;
+      player.details.stance = stance;
+      this.calculate(player);
     },
     setBoosts(player, boosts) {
-      player.boosts = boosts;
+      player.details.boosts = boosts;
+      this.calculate(player);
     },
     setTarget(target) {
       this.target = target;
+      this.calculate();
     },
     setSettings(player, settings) {
       player.settings = settings;
+      this.calculate(player);
     },
     setSpell(player, spell) {
-      player.spell = spell;
+      player.details.spell = spell;
+      this.calculate(player);
     },
   },
 };

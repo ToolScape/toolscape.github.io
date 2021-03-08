@@ -9,7 +9,9 @@ class DhcbPassive extends Boost {
     if (rangedDps && this.isTargetDraconic(rangedDps.target)) {
       rangedDps.addAccuracyModifier(this.name, 1.3);
       rangedDps.addDamageModifier(this.name, 1.3);
+      return true;
     }
+    return false;
   }
 
   isTargetDraconic(target) {

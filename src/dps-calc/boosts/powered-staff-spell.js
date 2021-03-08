@@ -6,6 +6,8 @@ class PoweredStaffSpell extends Boost {
 
   categories = ['special'];
 
+  show = false;
+
   // seas, swamp, sang
   staffType;
 
@@ -27,7 +29,9 @@ class PoweredStaffSpell extends Boost {
           magicDps.spell = SpellsManager.getByName('Sanguinesti staff');
           break;
       }
+      return true;
     }
+    return false;
   }
 
   get name() {

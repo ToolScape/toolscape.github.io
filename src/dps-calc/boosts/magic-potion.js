@@ -9,7 +9,9 @@ class MagicPotion extends Boost {
     if (magicDps) {
       magicDps.effectiveStrength += 4;
       magicDps.effectiveAttack += 4;
+      return true;
     }
+    return false;
   }
 
   get name() {

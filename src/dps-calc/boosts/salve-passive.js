@@ -14,20 +14,30 @@ class SalvePassive extends Boost {
   }
 
   apply({ meleeDps, rangedDps, magicDps }) {
+    const instanceDps = meleeDps || rangedDps || magicDps;
+    if (!this.isTargetUndead(instanceDps.target)) return false;
     if (meleeDps) {
       const bonus = this.enchanted ? 1.2 : 7 / 6;
       meleeDps.setBonus('undead', bonus);
+      return true;
     }
     if (this.imbued) {
       if (rangedDps) {
         const bonus = this.enchanted ? 1.2 : 7 / 6;
         rangedDps.setBonus('undead', bonus);
+        return true;
       }
       if (magicDps) {
         const bonus = this.enchanted ? 1.2 : 1.15;
         magicDps.setBonus('undead', bonus);
+        return true;
       }
     }
+    return false;
+  }
+
+  isTargetUndead(target) {
+    return target.attributes.includes('undead');
   }
 
   get name() {

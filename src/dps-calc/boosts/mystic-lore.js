@@ -7,7 +7,9 @@ class MysticLore extends Boost {
     if (magicDps) {
       const { effectiveAttack } = magicDps;
       magicDps.effectiveAttack = Math.floor(effectiveAttack * 1.1);
+      return true;
     }
+    return false;
   }
 
   get name() {

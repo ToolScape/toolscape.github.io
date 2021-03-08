@@ -9,7 +9,9 @@ class BrimstoneRingPassive extends Boost {
     if (magicDps) {
       // 25% chance to reduce by 10% = 2.5% reduction on average
       magicDps.addTargetDefenceRollModifier(this.name, 0.975);
+      return true;
     }
+    return false;
   }
 
   get name() {

@@ -8,7 +8,9 @@ class ChaosGauntletsPassive extends Boost {
   apply({ magicDps }) {
     if (magicDps && this.isBoltSpell(magicDps.spell)) {
       magicDps.bonusMaxHit += 3;
+      return true;
     }
+    return false;
   }
 
   isBoltSpell(spell) {

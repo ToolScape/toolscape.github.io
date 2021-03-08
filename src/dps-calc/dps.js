@@ -115,7 +115,7 @@ class Dps {
   calculate() {
     this.boosts.sort((a, b) => b.priority - a.priority)
       .forEach((boost) => {
-        boost.apply({ [this.dpsType]: this });
+        boost.active = boost.apply({ [this.dpsType]: this });
       });
 
     return this;

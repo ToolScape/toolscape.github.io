@@ -9,7 +9,9 @@ class StrengthPotion extends Boost {
     if (meleeDps) {
       const { effectiveStrength } = meleeDps;
       meleeDps.effectiveStrength += Math.floor(effectiveStrength * 0.1) + 3;
+      return true;
     }
+    return false;
   }
 
   get name() {

@@ -30,6 +30,7 @@ class BgsSpec extends Boost {
       debuffedTarget[stat] = statLevel;
       reductionIndex++;
     }
+    return true;
   }
 
   get name() {

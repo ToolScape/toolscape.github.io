@@ -8,7 +8,9 @@ class LeafBladedBattleaxePassive extends Boost {
   apply({ meleeDps }) {
     if (meleeDps && this.isTargetLeafy(meleeDps.target)) {
       meleeDps.addDamageModifier(this.name, 1.175);
+      return true;
     }
+    return false;
   }
 
   isTargetLeafy(target) {

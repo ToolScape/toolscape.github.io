@@ -9,8 +9,9 @@ class DharoksBoost extends Boost {
       const playerCurrentHp = meleeDps.settings.currentHitpoints;
       const damageModifier = 1 + (playerMaxHp - playerCurrentHp) / 100 * (playerMaxHp / 100);
       meleeDps.addDamageModifier(this.name, damageModifier);
+      return true;
     }
-    return undefined;
+    return false;
   }
 
   get name() {

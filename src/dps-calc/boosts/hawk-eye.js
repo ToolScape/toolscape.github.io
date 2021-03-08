@@ -8,7 +8,9 @@ class HawkEye extends Boost {
       const { effectiveAttack, effectiveStrength } = rangedDps;
       rangedDps.effectiveAttack = Math.floor(effectiveAttack * 1.1);
       rangedDps.effectiveStrength = Math.floor(effectiveStrength * 1.1);
+      return true;
     }
+    return false;
   }
 
   get name() {

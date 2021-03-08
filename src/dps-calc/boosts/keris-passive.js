@@ -8,7 +8,9 @@ class KerisPassive extends Boost {
   apply({ meleeDps }) {
     if (meleeDps && this.isTargetKalphite(meleeDps.target)) {
       meleeDps.addDamageModifier(this.name, 1.33);
+      return true;
     }
+    return false;
   }
 
   isTargetKalphite(target) {

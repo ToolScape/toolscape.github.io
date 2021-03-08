@@ -10,7 +10,9 @@ class ObsidianArmourPassive extends Boost {
     if (meleeDps && this.isObsidianWeapon(meleeDps.equipment)) {
       meleeDps.addAccuracyModifier(this.name, 1.1);
       meleeDps.addDamageModifier(this.name, 1.1);
+      return true;
     }
+    return false;
   }
 
   isObsidianWeapon(equipment) {

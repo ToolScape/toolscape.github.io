@@ -7,7 +7,9 @@ class BurstOfStrength extends Boost {
     if (meleeDps) {
       const { effectiveStrength } = meleeDps;
       meleeDps.effectiveStrength = Math.floor(effectiveStrength * 1.05);
+      return true;
     }
+    return false;
   }
 
   get name() {

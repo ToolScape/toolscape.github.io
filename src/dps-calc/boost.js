@@ -8,7 +8,7 @@ class Boost {
   categories = [];
 
   // determines whether or not to display this boost
-  show = false;
+  show = true;
 
   active = true;
 

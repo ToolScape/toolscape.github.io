@@ -4,7 +4,8 @@
       v-model="target"
     />
     <monster-details
-      :monster="target"
+      :monster="computedTarget"
+      :debuffed-monsters="debuffedTargets"
     />
   </osrs-container>
 </template>
@@ -17,10 +18,24 @@ import MonsterDetails from './MonsterDetails.vue';
 export default {
   name: 'TargetDetails',
   components: { MonsterDetails, MonsterSelect, OsrsContainer },
+  props: {
+    debuffedTargets: {
+      type: Array,
+      default: undefined,
+    },
+  },
   data() {
     return {
       target: undefined,
     };
+  },
+  computed: {
+    computedTarget() {
+      if (this.debuffedTarget) {
+        return this.debuffedTarget;
+      }
+      return this.target;
+    },
   },
   watch: {
     target: function targetChanged(target) {

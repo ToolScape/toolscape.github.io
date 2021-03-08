@@ -7,7 +7,9 @@ class IncredibleReflexes extends Boost {
     if (meleeDps) {
       const { effectiveAttack } = meleeDps;
       meleeDps.effectiveAttack = Math.floor(effectiveAttack * 1.15);
+      return true;
     }
+    return false;
   }
 
   get name() {

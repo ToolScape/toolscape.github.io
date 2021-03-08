@@ -25,6 +25,8 @@ class ArclightSpec extends Boost {
       Math.ceil(debuffedTarget.strength_level - strengthReduction));
     debuffedTarget.attack_level = Math.max(0,
       Math.ceil(debuffedTarget.attack_level - attackReduction));
+
+    return true;
   }
 
   isTargetDemon(target) {

@@ -9,7 +9,9 @@ class ViggorasChainmacePassive extends Boost {
     if (meleeDps && meleeDps.settings.inWilderness) {
       meleeDps.addAccuracyModifier(this.name, 1.5);
       meleeDps.addDamageModifier(this.name, 1.5);
+      return true;
     }
+    return false;
   }
 
   get name() {

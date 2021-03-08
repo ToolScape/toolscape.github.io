@@ -9,7 +9,9 @@ class CrawsBowPassive extends Boost {
     if (rangedDps && rangedDps.settings.inWilderness) {
       rangedDps.addAccuracyModifier(this.name, 1.5);
       rangedDps.addDamageModifier(this.name, 1.5);
+      return true;
     }
+    return false;
   }
 
   get name() {

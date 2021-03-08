@@ -8,7 +8,9 @@ class Chivalry extends Boost {
       const { effectiveStrength, effectiveAttack } = meleeDps;
       meleeDps.effectiveStrength = Math.floor(effectiveStrength * 1.18);
       meleeDps.effectiveAttack = Math.floor(effectiveAttack * 1.15);
+      return true;
     }
+    return false;
   }
 
   get name() {

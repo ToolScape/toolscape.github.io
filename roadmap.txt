@@ -1,7 +1,5 @@
 clean up data to remove duplicate or cosmetic variations
 
-dps results clean up and useful info
-
 special attacks
 
 ruby bolts support
@@ -11,3 +9,9 @@ barrows set effects?
 remember last entered stats (store vuex)
 
 custom monster
+
+loadout management
+
+bgs vs dwh
+
+logging error messaging
